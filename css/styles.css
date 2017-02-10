@@ -54,6 +54,7 @@ footer {
 	  background: linear-gradient(#FAA20E, #E7833B);
 	  padding: 50px;
 	  text-align:center;  
+	  clear:both;
 }
 
 .footer-logo {
@@ -80,23 +81,93 @@ ABOUT MOVIE PAGE STYLING
 
 .movieinfo-header {
 	background-image: url(../images/Rogue-One.jpg);
-	width: 100vw;
+	background-size:cover;
+	background-position:50% 50%;
 	height: 100vh;
-
 }
 
-.info .wrapper{
-  display:block;
-  float:left;
-  margin:50px auto 200px;
-  width:100%;
-  padding:0 5%;
-  transform:skew(0deg,-5deg);
--ms-transform:skew(0deg,-10deg);
--webkit-transform:skew(0deg,-5deg); 
+.wrapper {
+	float:right;
+	    margin-top: -161px;
+    position: relative;
+    width:100%;
 }
 
 
+.more-info-wrapper {
+	float:left;
+	margin-top:250px;
+}
+
+.skeww {
+	transform:skew(0deg,5deg);
+-ms-transform:skew(0deg,10deg);
+-webkit-transform: skew(0deg,-5deg);
+    background-color: white;
+    height: 165px;
+    position: relative;
+    top: -100px;
+}
+
+.rating {
+	color: #fff;
+    background-color: #E7833B;
+    padding: 5px;
+    width: 140px;
+    height: 140px;
+    text-align: center;
+    z-index: 1;
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    right: 60px;
+    top: 630px;
+    clear:both;
+}
+.rating p {
+	padding:0;
+	margin:0;
+}
+#rate-number {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 50px;
+	color:#fff;
+	padding:0;
+}
+
+#out-of {
+	font-family: 'Oswald', sans-serif;
+	font-weight: 300;
+	font-size: 20px;
+	color:#fff;
+	padding:0;
+
+}
+
+.movie-poster {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 12px;
+}
+.movie-poster:after {
+    content: '';
+    background-image: url('http://a.dilcdn.com/bl/wp-content/uploads/sites/6/2016/10/rogueone_onesheetA.jpg');
+    background-size:cover;
+	background-position:50% 50%;
+    height: 556px;
+    position: absolute;
+    left:100px;
+    bottom: -337px;
+    width: 388px;
+    border-radius:8px;
+}
+
+
+.movie-poster img{
+
+    border-radius: 8px;
+
+}
 /*
 
 =====================
@@ -139,6 +210,44 @@ header h2 {
 .top-bar, .top-bar ul {
     background-color: transparent;
     padding-bottom: 25px;
+}
+
+.movie-poster {
+	width:165px;
+	height:230px;
+
+}
+
+.movieinfo-header {
+    height: 500px;
+}
+
+#rate-number {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	
+}
+
+.rating {
+    width: 40px;
+    height: 40px;
+    top: 356px;
+
+}
+
+.movie-poster {
+	
+	height:auto;
+    
+}
+
+.movie-poster:after {
+	width: 167px;
+	height:230px;
+    left: 12px;
+    bottom: 262px;
+    
 }
 
 
