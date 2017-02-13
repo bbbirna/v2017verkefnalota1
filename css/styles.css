@@ -10,13 +10,13 @@ HEADER STYLING
 
 header {
 	  background: linear-gradient(#FAA20E, #E7833B);
-	  padding: 30px 50px 120px 50px;
+	  padding: 10px 0px 120px 10px;
 	  text-align:center;  
+	  height: 490px;
 }
 
 .top-bar, .top-bar ul {
     background-color: transparent;
-    padding-bottom: 48px;
 }
 
 .header-logo {
@@ -40,7 +40,32 @@ header h2 {
 	color:#fff;
 }
 
+.container.headings{
+	padding-top: 66px;
+	padding-bottom: 48px;
+	
+}
 
+/*=====================
+Button STYLING
+=====================
+*/
+.row.largebutton{
+	padding-top: 170px;
+	padding-bottom: 310px;
+	justify-content: center;
+}
+
+.fancy.button {
+  	background-color: orange;
+	border-radius: 8px;
+	height: 100px;
+	width: 460px;
+
+}
+a.fancy.button{
+	font-size: 40px;
+}
 
 
 /*
