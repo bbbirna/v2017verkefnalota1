@@ -8,33 +8,38 @@
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/foundation.min.js"></script>
-	
+<!-- 	<script type="text/javascript" src="js/foundation.slider.js"></script> -->
+	<script type="text/javascript" src="js/scripts.js"></script>
 </head>
 <body>
 	<div class="container">
-		<div class="row line-after">
+		<div class="exit-x">
+			<span class="x1"></span>
+			<span class="x2"></span>
+		</div>
+		<div class="row search-row line-after align-justify">
 			<div class="columns small-10 medium-10">
-				<input type="text" name="" placeholder="Search">
+				<input class="search-bar" type="text" name="" placeholder="Search">
 			
 			</div>
 			<div class="columns medium-2">
 				<img src="images/search-black.png">
 			</div>
 		</div>
-		<div class="row">
-			<h2>Rating</h2>
-			<div class="columns small-12">
+		<div class="row row-slider">
+			<h2 class="columns small-12">Rating</h2>
+			<div class="columns small-12 align-center">
 			<!-- 	<div class="range-slider" data-slider>
 					<span class="range-slider-handle" role="slider" tabindex="0"></span>
 					<span class="range-slider-active-segment"></span>
 					<input type="hidden">
 				</div> -->
-				<<!-- div class="range-slider" data-slider data-options="start: 1; end: 10;">
+				<!-- div class="range-slider" data-slider data-options="start: 1; end: 10;">
 					<span class="range-slider-handle" role="slider" tabindex="0"></span>
 					<span class="range-slider-active-segment"></span>
 					<input type="hidden">
 				</div> -->
-				<div class="slider" data-slider data-initial-start="25" data-initial-end="75">
+				<div class="slider align-center" data-slider data-initial-start="5" data-initial-end="10" data-end="10">
 					<span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
 					<span class="slider-fill" data-slider-fill></span>
 					<span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
@@ -43,25 +48,31 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<h2>Year</h2>
+		<div class="row row-slider">
+			<h2 class="columns small-12">Year</h2>
 			<div class="columns small-12">
-				
+				<div class="slider" data-slider data-initial-start="2016" data-initial-end="2017" data-start="1888" data-end="2017">
+					<span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
+					<span class="slider-fill" data-slider-fill></span>
+					<span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
+					<input type="hidden">
+					<input type="hidden">
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<h2>Genre</h2>
+		<div class="row row-genre">
+			<h2 class="columns small-12">Genre</h2>
 			<div class="columns small-4">
-				<button>Action</button>
-				<button>Biography</button>
+				<button class="btn-genre">Action</button>
+				<button class="btn-genre">Biography</button>
 			</div>
 			<div class="columns small-4">
-				<button>Adventure</button>
-				<button>Comedy</button>
+				<button class="btn-genre">Adventure</button>
+				<button class="btn-genre">Comedy</button>
 			</div>
 			<div class="columns small-4">
-				<button>Animation</button>
-				<button>Crime</button>
+				<button class="btn-genre">Animation</button>
+				<button class="btn-genre">Crime</button>
 			</div>
 		</div>
 	</div>
