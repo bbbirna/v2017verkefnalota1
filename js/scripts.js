@@ -4,6 +4,29 @@ $(function() {
 
 });
 
+let showHandleValue = function(handleValue, slider, span) {
+		if (handleValue !== $(slider).attr('data-initial-start') && handleValue !== $(slider).attr('data-initial-end')) {
+			$(span).fadeIn();
+			console.log("rgddwdwdwdwd")
+			return;
+		}
+		else {
+			$(span).fadeOut();
+			return;
+		}
+		if (handleValue === $(slider).attr('data-initial-end')) {
+			$(span).fadeOut();
+			console.log("rgddwdwdwdwd")
+			return;
+		}
+		else {
+			$(span).fadeIn();
+			return;
+		}
+	}
+
+
+
 
 let searchInput = "";
 
@@ -18,19 +41,30 @@ $(document).ready(function() {
 	// 	console.log(handle.attr('aria-valuenow'));
 	// });
 
-	$('#slider-handle1').on('moved.zf.slider', function(e){
-	  let handleValue = this.attr('aria-valuenow');
-	  console.log(handleValue);
-	  $("#testSpan").innerHTML = handleValue;
-	  document.getElementById("slider-handle-num1").innerHTML = handleValue;
+	$('.slider1').on('moved.zf.slider', function(){
+	  let handleValue1 = $("#slider-handle1").attr('aria-valuenow');
+	  console.log(handleValue1);
+	  document.getElementById("sh-num1").innerHTML = handleValue1;
+	  let handleValue2 = $("#slider-handle2").attr('aria-valuenow');
+	  console.log(handleValue2);
+	  document.getElementById("sh-num2").innerHTML = handleValue2;
+	  showHandleValue(handleValue1, ".slider1", "#sh-num1");
+	  showHandleValue(handleValue2, ".slider1", "#sh-num2");
 	});
 
-	$('#slider-handle2').on('moved.zf.slider', function(e, handle){
-	  let handleValue = handle.attr('aria-valuenow');
-	  console.log(handleValue);
-	  $("#testSpan").innerHTML = handleValue;
-	  document.getElementById("slider-handle-num2").innerHTML = handleValue;
+	$('.slider2').on('moved.zf.slider', function(){
+	  let handleValue3 = $("#slider-handle3").attr('aria-valuenow');
+	  console.log(handleValue3);
+	  document.getElementById("sh-num3").innerHTML = handleValue3;
+	  let handleValue4 = $("#slider-handle4").attr('aria-valuenow');
+	  console.log(handleValue4);
+	  document.getElementById("sh-num4").innerHTML = handleValue4;
+	  showHandleValue(handleValue3, ".slider2", "#sh-num3");
+	  showHandleValue(handleValue4, ".slider2", "#sh-num4");
 	});
+
+	
+
 
 	// $('.slider').on('moved.zf.slider', function(e, handle){
 	//   let handleValue = handle.attr('aria-valuenow');
@@ -45,17 +79,25 @@ $(document).ready(function() {
 	let lineDots = "";
 
 	let test = function() {
-		for (let i = 0; i < 22; i++) {
+		for (let i = 0; i < $(".slider").width()/37; i++) {
 			lineDots += svgDot;
-
 		}
 	}();
 
 	
+	// $( window ).resize(function() {
+	//   for (let i = 0; i < $(".slider").width()/33; i++) {
+	// 		lineDots -= svgDot - svgDot;
+	// 	}
+	// });
 
 	$(".slider").append(lineDots);
 
+});
 
+
+$( window ).resize(function() {
+  console.log($( window ).width() + "fjfjfjjfjfj");
 });
 
 

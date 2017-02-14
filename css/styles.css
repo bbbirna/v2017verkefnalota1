@@ -333,13 +333,18 @@ p.search-results-text {
 }
 
 
+.slider {
+	display: flex;
+	justify-content: space-between;
+}
+
 
 .slider-handle1 {
 	font-size: 20pt;
 	color: black;
 }
 
-.slider-handle-num {
+.slider-num {
 	font-family: 'roboto', sans-serif;
 	font-size: 30px;
 	color: #e84b33;
@@ -348,10 +353,13 @@ p.search-results-text {
 	position: absolute;
 	text-align: center;
 	width: 80px;
+	display: none;
 }
-
-
 
 svg {
-	margin-right: 2.9%;
+	/*margin-right: 2.9%;*/
+
 }
+
+
+
