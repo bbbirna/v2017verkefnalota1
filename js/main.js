@@ -103,7 +103,7 @@ function getMovie (movieList){
 function displayMovie(movieDatabase){
  let image = document.createElement("img");
 
-//   image.src = "http://image.tmdb.org/t/p/original" + response.backdrop_path
+  image.src = movieDatabase.poster;
 
 	let title = document.createElement("h1");
 	title.innerHTML = movieDatabase.title;

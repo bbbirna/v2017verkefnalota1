@@ -8,6 +8,13 @@ HEADER STYLING
 */
 
 
+header {
+	background: linear-gradient(#FAA20E, #E7833B);
+	padding: 10px 0px 120px 10px;
+	text-align:center;  
+	height: 490px;
+}
+
 
 .top-bar, .top-bar ul {
     background-color: transparent;
@@ -515,87 +522,3 @@ MEDIA QUERIES
 
 
 
-
-
-
-
-.skew {
-	height: 400px;
-	width: 450px;
-	background-color: #fff;
-	/*transform: rotate(5deg);*/
-	/*margin-left:20px;
-	margin-right:20px;*/
-	padding:3px;
-	margin:5px;
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-   
-}
-
-.popular {
-	margin:0;
-	flex-flow: inherit;
-	margin-bottom: 80px;
-}
-
-
-
-.image {
-	/*padding:20px;*/
-	height: 100%;
-	width: 100%;
-
-}
-
-#rogue {
-	background-color: #fff;
-	    opacity: 0.9;
-    margin-top: -161px;
-    padding: 30px;
-}
-
-#rogue h2, h3, h4 {
-	font-family: 'Oswald', sans-serif;
-}
-
-#rogue h2 {
-	color: #000;
-	font-weight: 400;
-	font-size: 25px;
-}
-
-#rogue h3 {
-	color: blue;
-	font-weight: 300;
-	font-size: 15px
-}
-
-#rogue h4 {
-	color: grey;
-	font-weight: 300;
-	font-size: 15px
-}
-
-#floating-button {
-color:#fff;
-margin-top: -45px;
-margin-left:355px;
-background-color: orange;
-padding: 5px;;
-width: 40px;
-height: 40px;
-text-align: center;
-z-index: 1;
-border-radius: 50%;
-position: relative;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
-
-#floating-button h2 {
-	font-size: 20px;
-}
-
-#floating-button h2 {
-	font-size: 20px;
-}
