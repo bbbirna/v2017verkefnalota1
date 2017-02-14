@@ -7,6 +7,7 @@ HEADER STYLING
 
 */
 
+
 header {
 	background: linear-gradient(#FAA20E, #E7833B);
 	padding: 10px 0px 120px 10px;
@@ -14,9 +15,9 @@ header {
 	height: 490px;
 }
 
+
 .top-bar, .top-bar ul {
     background-color: transparent;
-    padding-bottom: 48px;
 }
 
 .header-logo {
@@ -38,6 +39,33 @@ header h2 {
 	font-weight: 300;
 	font-size: 40px;
 	color:#fff;
+}
+
+.container.headings{
+	padding-top: 66px;
+	padding-bottom: 48px;
+	
+}
+
+/*=====================
+Button STYLING
+=====================
+*/
+.row.largebutton{
+	padding-top: 170px;
+	padding-bottom: 310px;
+	justify-content: center;
+}
+
+.fancy.button {
+  	background-color: orange;
+	border-radius: 8px;
+	height: 100px;
+	width: 460px;
+
+}
+a.fancy.button{
+	font-size: 40px;
 }
 
 
@@ -197,7 +225,7 @@ ABOUT MOVIE PAGE STYLING
     position: absolute;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     right: 60px;
-    top: 630px;
+    top: 460px;
     clear:both;
 }
 
@@ -265,6 +293,19 @@ MEDIA QUERIES
 
 */
 
+@media screen and (max-width: 1000px){
+
+.movie-poster {
+		background-position:50% 10%;
+	    position: relative;
+	   	left: -25%;
+	    bottom: 347px;
+	    width: 290px;
+	    height: 581px;
+	}
+
+}
+
 
 @media screen and (max-width: 640px){
 
@@ -305,6 +346,7 @@ MEDIA QUERIES
 	.movie-poster {
 		width:165px;
 		height:230px;
+
 	}
 
 	.movieinfo-header {
@@ -320,7 +362,7 @@ MEDIA QUERIES
 	.rating {
 	    width: 40px;
 	    height: 40px;
-	    top: 356px;
+	    top: 366px;
 	}
 
 	#out-of {
@@ -353,7 +395,7 @@ MEDIA QUERIES
 	.movie-poster {
 		background-position:50% 10%;
 	    position: relative;
-	    left:-130px;
+	    left:-25%;
 	    bottom: 277px;
 	    width: 280px;
 	    height:311px;
