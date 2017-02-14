@@ -1,4 +1,5 @@
 
+
 /*
 
 =====================
@@ -7,14 +8,12 @@ HEADER STYLING
 
 */
 
-
 header {
-	background: linear-gradient(#FAA20E, #E7833B);
-	padding: 10px 0px 120px 10px;
-	text-align:center;  
-	height: 490px;
+	  background: linear-gradient(#FAA20E, #E7833B);
+	  padding: 10px 0px 120px 10px;
+	  text-align:center;  
+	  height: 490px;
 }
-
 
 .top-bar, .top-bar ul {
     background-color: transparent;
@@ -78,10 +77,10 @@ FOOTER STYLING
 */
 
 footer {
-	background: linear-gradient(#FAA20E, #E7833B);
-	padding: 50px;
-	text-align:center;  
-	clear:both;
+	  background: linear-gradient(#FAA20E, #E7833B);
+	  padding: 50px;
+	  text-align:center;  
+	  clear:both;
 }
 
 .footer-logo {
@@ -100,9 +99,9 @@ footer h4 {
 
 /*
 
-=============================
+=====================
 ABOUT MOVIE PAGE STYLING
-=============================
+=====================
 
 */
 
@@ -119,15 +118,13 @@ ABOUT MOVIE PAGE STYLING
     float: right;
     margin-top: -669px;
 }
-
 .wrapper h2 {
-	font-family: 'Roboto Condensed', sans-serif;
+font-family: 'Roboto Condensed', sans-serif;
 	font-weight: 400;
 	font-size: 40px;
 	color:#3D6390;
 	margin-top:15px;
 }
-
 .bold {
 	font-family: 'Oswald', sans-serif;
 	font-weight: 400;
@@ -138,6 +135,7 @@ ABOUT MOVIE PAGE STYLING
 	font-family: 'Oswald', sans-serif;
 	font-weight: 300;
 	font-size: 70px;
+
 }
 
 .bold-title {
@@ -165,6 +163,7 @@ ABOUT MOVIE PAGE STYLING
 	color:#3D6390;
 }
 
+
 .movie-summary h3 {
 	font-family: 'Oswald', sans-serif;
 	font-weight: 400;
@@ -173,7 +172,9 @@ ABOUT MOVIE PAGE STYLING
 	padding-bottom: 0px;
 }
 
-.storyline {
+
+
+ .storyline {
 	font-family: 'Oswald', sans-serif;
 	font-weight: 400;
 	font-size: 40px;
@@ -198,6 +199,7 @@ ABOUT MOVIE PAGE STYLING
 	font-size: 20px;
 }
 
+
 .more-info-wrapper {
 	clear:both;
 	margin-top:-322px;
@@ -205,8 +207,8 @@ ABOUT MOVIE PAGE STYLING
 
 .skeww {
 	transform:skew(0deg,5deg);
-    -ms-transform:skew(0deg,10deg);
-    -webkit-transform: skew(0deg,-5deg);
+-ms-transform:skew(0deg,10deg);
+-webkit-transform: skew(0deg,-5deg);
     background-color: white;
     height: 165px;
     position: relative;
@@ -225,15 +227,13 @@ ABOUT MOVIE PAGE STYLING
     position: absolute;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     right: 60px;
-    top: 460px;
+    top: 630px;
     clear:both;
 }
-
 .rating p {
 	padding:0;
 	margin:0;
 }
-
 #rate-number {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
@@ -248,13 +248,13 @@ ABOUT MOVIE PAGE STYLING
 	font-size: 20px;
 	color:#fff;
 	padding:0;
-	line-height: 0.2;
+
 }
 
 .movie-poster {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     border-radius: 12px;
-    background-image: url('http://a.dilcdn.com/bl/wp-content/uploads/sites/6/2016/10/rogueone_onesheetA.jpg');
+     background-image: url('http://a.dilcdn.com/bl/wp-content/uploads/sites/6/2016/10/rogueone_onesheetA.jpg');
     background-size:cover;
 	background-position:50% 50%;
     height: 556px;
@@ -265,9 +265,14 @@ ABOUT MOVIE PAGE STYLING
     border-radius:8px;
 }
 
+
+
 .movie-poster img{
+
     border-radius: 8px;
+
 }
+
 
 .movie-stills img, .movie-stills-2 img{
 	max-width:48%;
@@ -275,6 +280,7 @@ ABOUT MOVIE PAGE STYLING
 	height: 220px;
 	padding-left:0;
 }
+
 
 .main-cast {
 	margin-top:70px;
@@ -284,7 +290,6 @@ ABOUT MOVIE PAGE STYLING
 .mobile-year, .mobile-main-cast, .mobile-storyline {
 	display: none;
 }
-
 /*
 
 =====================
@@ -293,246 +298,317 @@ MEDIA QUERIES
 
 */
 
-@media screen and (max-width: 1000px){
-
-.movie-poster {
-		background-position:50% 10%;
-	    position: relative;
-	   	left: -25%;
-	    bottom: 347px;
-	    width: 290px;
-	    height: 581px;
-	}
-
-}
-
 
 @media screen and (max-width: 640px){
 
 	header {
 	  padding: 0px 21px 20px 21px;;
 	  text-align:center;  
-	}
+}
+.menu-text, .menu-text a {
+	padding:0;
+}
 
-	.menu-text, .menu-text a {
-		padding:0;
-	}
+.header-logo {
+	width:52px;
+	height: 42px;
+}
 
-	.header-logo {
-		width:52px;
-		height: 42px;
-	}
+.search-icon {
+	width: 20px;
+	height:20px;
+}
 
-	.search-icon {
-		width: 20px;
-		height:20px;
-	}
+header h1 {
+	font-size: 35px;
+	font-weight: 300;
+	padding-bottom: 60px;
+}
 
-	header h1 {
-		font-size: 35px;
-		font-weight: 300;
-		padding-bottom: 60px;
-	}
+header h2 {
+	display: none;
+}
 
-	header h2 {
-		display: none;
-	}
+.top-bar, .top-bar ul {
+    background-color: transparent;
+    padding-bottom: 25px;
+}
 
-	.top-bar, .top-bar ul {
-	    background-color: transparent;
-	    padding-bottom: 25px;
-	}
+.movie-poster {
+	width:165px;
+	height:230px;
 
-	.movie-poster {
-		width:165px;
-		height:230px;
+}
 
-	}
+.movieinfo-header {
+    height: 500px;
+}
 
-	.movieinfo-header {
-	    height: 500px;
-	}
+#rate-number {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	
+}
 
-	#rate-number {
-		font-family: 'Roboto', sans-serif;
-		font-weight: 700;
-		font-size: 16px;
-	}
+.rating {
+    width: 40px;
+    height: 40px;
+    top: 356px;
 
-	.rating {
-	    width: 40px;
-	    height: 40px;
-	    top: 366px;
-	}
+}
+#out-of {
+	display: none;
+}
 
-	#out-of {
-		display: none;
-	}
+.skeww {
+	height: 130px;
+}
+.info {
+	margin-left: 10px;
+}
+.wrapper {
+	margin-top :-474px;
+	margin-left:10px;
+	clear:both;
+	position: relative;
+}
 
-	.skeww {
-		height: 130px;
-	}
+.wrapper h2 {
+	display:none;
+}
 
-	.info {
-		margin-left: 10px;
-	}
+.more-info-wrapper {
+	display: none;
+}
 
-	.wrapper {
-		margin-top :-474px;
-		margin-left:10px;
-		clear:both;
-		position: relative;
-	}
 
-	.wrapper h2 {
-		display:none;
-	}
+.movie-poster {
+   
+	background-position:50% 10%;
+    position: relative;
+    left:-130px;
+    bottom: 277px;
+    width: 280px;
+    height:311px;
+}
 
-	.more-info-wrapper {
-		display: none;
-	}
 
-	.movie-poster {
-		background-position:50% 10%;
-	    position: relative;
-	    left:-25%;
-	    bottom: 277px;
-	    width: 280px;
-	    height:311px;
-	}
+.bold {
+	font-size: 28px;
+	display: block;
+}
 
-	.bold {
-		font-size: 28px;
-		display: block;
-	}
+.regular {
+	font-size: 15px;
+	font-style: italic;
+}
 
-	.regular {
-		font-size: 15px;
-		font-style: italic;
-	}
+.bold-title, .regular-name {
+	font-size: 13px;
+}
 
-	.bold-title, .regular-name {
-		font-size: 13px;
-	}
+.movie-summary h3, .main-cast h3 {
+	font-size: 20px;
+}
+.main-cast h3 {
+	padding-bottom: 18px;
+}
 
-	.movie-summary h3, .main-cast h3 {
-		font-size: 20px;
-	}
+.storyline-info {
+	font-size: 15px;
+}
 
-	.main-cast h3 {
-		padding-bottom: 18px;
-	}
+.image-padding-1 {
+	padding-left: 10px;
+	padding-right:0;
+}
+.image-padding-2 {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.image-padding-3 {
+	padding-right: 10px;
+	padding-left:0px;
+}
+.image-padding-4 {
+	padding-right: 10px;
+	padding-left:0;
+}
 
-	.storyline-info {
-		font-size: 15px;
-	}
+.cast-name {
+	font-size: 13px;
+}
+.mobile-year {
+	display: inline-block;
+	position: relative;
+    width: 100%;
+    float: right;
+    margin-top: -530px;
+    padding-left:10px;
+}
 
-	.image-padding-1 {
-		padding-left: 10px;
-		padding-right:0;
-	}
+.mobile-year:after {
+	content:'';
 
-	.image-padding-2 {
-		padding-left: 10px;
-		padding-right: 10px;
-	}
+	position: relative;
+	
+	display: block;
+	
+}
+.mobile-year h3, .mobile-year h4{
+	padding:0;
+}
+.mobile-year h3 {
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 300;
+	font-size: 10px;
+	padding:0;
+}
+	
 
-	.image-padding-3 {
-		padding-right: 10px;
-		padding-left:0px;
-	}
 
-	.image-padding-4 {
-		padding-right: 10px;
-		padding-left:0;
-	}
+.mobile-year h4{
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 400;
+	font-size: 13px;
+	color:#3D6390;
+}
 
-	.cast-name {
-		font-size: 13px;
-	}
+.writers {
+	padding:0;
+}
 
-	.mobile-year {
-		display: inline-block;
-		position: relative;
-	    width: 100%;
-	    float: right;
-	    margin-top: -530px;
-	    padding-left:10px;
-	}
+.mobile-main-cast, .mobile-storyline {
+	display: block;
+}
 
-	.mobile-year h3, .mobile-year h4{
-		padding:0;
-	}
+.mobile-storyline {
+	margin-top: -230px;
+}
 
-	.mobile-year h3 {
-		font-family: 'Roboto Condensed', sans-serif;
-		font-weight: 300;
-		font-size: 10px;
-		padding:0;
-	}
+ .mobile-storyline h3 {
+	font-family: 'Oswald', sans-serif;
+	font-weight: 400;
+	font-size: 20px;
+}
 
-	.mobile-year h4{
-		font-family: 'Roboto Condensed', sans-serif;
-		font-weight: 400;
-		font-size: 13px;
-		color:#3D6390;
-	}
+.mobile-storyline-info {
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 400;
+	font-size: 15px;
+}
 
-	.writers {
-		padding:0;
-	}
+.plot, .storyline {
+	display:none;
+}
 
-	.mobile-main-cast, .mobile-storyline {
-		display: block;
-	}
+.plot-heading{
+	display: none;
+}
+.movie-summary-2 {
+	display: none;
+}
+.main-cast{
+	display: none;
+}
+.mobile-main-cast {
+	
+	margin-top:36px;
+}
 
-	.mobile-storyline {
-		margin-top: -230px;
-	}
+.movie-stills {
+	margin-bottom:70px;
+}
 
-	 .mobile-storyline h3 {
-		font-family: 'Oswald', sans-serif;
-		font-weight: 400;
-		font-size: 20px;
-	}
+	
 
-	.mobile-storyline-info {
-		font-family: 'Roboto Condensed', sans-serif;
-		font-weight: 400;
-		font-size: 15px;
-	}
 
-	.plot, .storyline {
-		display:none;
-	}
-
-	.plot-heading{
-		display: none;
-	}
-
-	.movie-summary-2 {
-		display: none;
-	}
-
-	.main-cast{
-		display: none;
-	}
-
-	.mobile-main-cast {
-		margin-top:36px;
-	}
-
-	.movie-stills {
-		margin-bottom:70px;
-	}
-
-	.movie-stills img {
-		width: 286px;
-	   
-	    padding-left: 0;
-	    padding-right: 0;
-	}
 }
 
 
 
+
+
+
+
+.skew {
+	height: 400px;
+	width: 450px;
+	background-color: #fff;
+	/*transform: rotate(5deg);*/
+	/*margin-left:20px;
+	margin-right:20px;*/
+	padding:3px;
+	margin:5px;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+   
+}
+
+.popular {
+	margin:0;
+	flex-flow: inherit;
+	margin-bottom: 80px;
+}
+
+
+
+.image {
+	/*padding:20px;*/
+	height: 100%;
+	width: 100%;
+
+}
+
+#rogue {
+	background-color: #fff;
+	    opacity: 0.9;
+    margin-top: -161px;
+    padding: 30px;
+}
+
+#rogue h2, h3, h4 {
+	font-family: 'Oswald', sans-serif;
+}
+
+#rogue h2 {
+	color: #000;
+	font-weight: 400;
+	font-size: 25px;
+}
+
+#rogue h3 {
+	color: blue;
+	font-weight: 300;
+	font-size: 15px
+}
+
+#rogue h4 {
+	color: grey;
+	font-weight: 300;
+	font-size: 15px
+}
+
+#floating-button {
+color:#fff;
+margin-top: -45px;
+margin-left:355px;
+background-color: orange;
+padding: 5px;;
+width: 40px;
+height: 40px;
+text-align: center;
+z-index: 1;
+border-radius: 50%;
+position: relative;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+#floating-button h2 {
+	font-size: 20px;
+}
+
+#floating-button h2 {
+	font-size: 20px;
+}
