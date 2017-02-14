@@ -104,6 +104,7 @@ function displayMovie(movieDatabase){
  let image = document.createElement("img");
 
   image.src = movieDatabase.poster;
+  document.querySelector("#movie-poster").appendChild(image);
 
 	let title = document.createElement("h1");
 	title.innerHTML = movieDatabase.title;
