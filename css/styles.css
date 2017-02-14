@@ -293,6 +293,19 @@ MEDIA QUERIES
 
 */
 
+@media screen and (max-width: 1000px){
+
+.movie-poster {
+		background-position:50% 10%;
+	    position: relative;
+	   	left: -25%;
+	    bottom: 347px;
+	    width: 290px;
+	    height: 581px;
+	}
+
+}
+
 
 @media screen and (max-width: 640px){
 
@@ -333,6 +346,7 @@ MEDIA QUERIES
 	.movie-poster {
 		width:165px;
 		height:230px;
+
 	}
 
 	.movieinfo-header {
@@ -348,7 +362,7 @@ MEDIA QUERIES
 	.rating {
 	    width: 40px;
 	    height: 40px;
-	    top: 356px;
+	    top: 366px;
 	}
 
 	#out-of {
@@ -381,7 +395,7 @@ MEDIA QUERIES
 	.movie-poster {
 		background-position:50% 10%;
 	    position: relative;
-	    left:-130px;
+	    left:-25%;
 	    bottom: 277px;
 	    width: 280px;
 	    height:311px;
