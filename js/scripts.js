@@ -18,8 +18,10 @@ $(document).ready(function() {
 	// 	console.log(handle.attr('aria-valuenow'));
 	// });
 
-	$('#slider-handle1').on('moved.zf.slider', function(e){
-	  let handleValue = this.attr('aria-valuenow');
+
+
+	$('.slider').on('moved.zf.slider', function(e, handle){
+	  let handleValue = handle.attr('aria-valuenow');
 	  console.log(handleValue);
 	  $("#testSpan").innerHTML = handleValue;
 	  document.getElementById("slider-handle-num1").innerHTML = handleValue;
