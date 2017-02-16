@@ -9,10 +9,10 @@ HEADER STYLING
 */
 
 header {
-	  background: linear-gradient(#FAA20E, #E7833B);
-	  padding: 10px 0px 120px 10px;
-	  text-align:center;  
-	  height: 490px;
+	background: linear-gradient(#FAA20E, #E7833B);
+	padding: 10px 0px 120px 10px;
+	text-align:center;  
+	height: 490px;
 }
 
 .top-bar, .top-bar ul {
@@ -346,6 +346,10 @@ ABOUT MOVIE PAGE STYLING
 
 .movie-poster img{
     border-radius: 8px;
+}
+
+.movie-stills {
+	margin-bottom: 20px;
 }
 
 .movie-stills img, .movie-stills-2 img{
