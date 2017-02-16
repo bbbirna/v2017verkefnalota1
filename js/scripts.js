@@ -82,20 +82,9 @@ $(document).ready(function() {
 
 				let imageURL = "http://image.tmdb.org/t/p/w185/" + response.results[i].profile_path;
 
+
 				
 				console.log(imageURL);
-				
-					
-				// $.get(imageURL)
-			 //    .done(function() { 
-			 //        // Do something now you know the image exists.
-			 //        console.log(":D")
-
-			 //    }).fail(function() { 
-			 //        // Image doesn't exist - do something else.
-			 //        console.log(":(")
-			 //    })
-				
 
 
 				let newResultsCard = new SearchResult(imageURL, response.results[i].name, "Actor | Writer | Producer", "Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...");
@@ -232,6 +221,10 @@ $(document).ready(function() {
 	
 	});
 
+	$(".btn-genre").click(function() {
+		$(this).toggleClass("btn-genre-fill");
+	});
+
 	
 
 	//til að fá genres í search
@@ -261,7 +254,7 @@ $(document).ready(function() {
 			genreBtn.className = "btn-genre";
 			genreCol.append(genreBtn);
 			genreBtn.innerHTML = response.genres[i].name;
-			$(genreBtn).attr("id", response.genres[i].id);
+			$(genreBtn).attr("data-id", response.genres[i].id);
 			$(genreBtn).attr("onclick", testfunciton);
 
 
