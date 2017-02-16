@@ -216,7 +216,7 @@ h2 {
 	transition: all ease 0.4s;
 }
 
-.btn-genre:first-child {
+.btn-genre {
 	margin-bottom: 30px;
 }
 
@@ -282,6 +282,7 @@ h2 {
 	height: 229px;
 	width: 100%;
 	position: relative;
+	margin-bottom: 54px;
 }
 
 .search-results-card:hover {
@@ -299,11 +300,16 @@ h2 {
 }
 
 .search-img {
-	width: 123px;
+	width: auto;
 	height: 158px;
 	background-color: grey;
 	margin-top: 38px;
 	margin-left: 34px;
+
+}
+
+.search-img {
+
 }
 
 .search-results-info {
@@ -368,7 +374,7 @@ svg {
 
 
 @media screen and (min-width: 500px) {
-	
+
 }
 
 
