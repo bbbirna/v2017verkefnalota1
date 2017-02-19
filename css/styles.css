@@ -192,6 +192,9 @@ ABOUT MOVIE PAGE STYLING
 	background-position:50% 50%;
 	height: 100vh;
 }
+#trailer-image {
+	display: none;
+}
 
 .wrapper {
 	margin-top: -161px;
