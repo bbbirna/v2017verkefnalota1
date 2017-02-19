@@ -1,208 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Front Page</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Front Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+  <link rel="stylesheet" type="text/css" href="css/slick.css">
+  <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/slick.min.js"></script>
+  <script type="text/javascript" src="js/JSON.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-  <header id="header">
-    <div class="top-bar ">
-      <div class="top-barleft small-1">
-        <ul class="menu">
-          <li class="menu-text">
-            <a href="#">
-              <img class="header-logo" src="images/Moviebox-logo.png">
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="top-barright small-1">
-        <ul class="menu">
-          <li>
-            <img class="search-icon" src="images/search.png">
-          </li>
-        </ul>
-      </div>
-    </div><!--close top-bar-->
-    <div class="title">
+<header id="header">
+  <div class="top-bar ">
+    <div class="top-barleft small-1">
+      <ul class="menu">
+        <li class="menu-text">
+          <a href="#">
+            <img class="header-logo" src="images/Moviebox-logo.png">
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="top-barright small-1">
+      <ul class="menu">
+        <li>
+          <img class="search-icon" src="images/search.png">
+        </li>
+      </ul>
+    </div>
+  </div><!--close top-bar-->
+  <div class="title">
     <h1>Welcome to Movie Box</h1><br>
     <h2>Your favorite movie source</h2>
-    </div>
-    
-  </header>     
-  
-   <div class="row">
-   <div class="container headings">
+  </div>
+</header> 
+
+<!-- START OF POPULAR MOVIES CATEGORY -->    
+<div class="row">
+  <div class="container headings">
     <h1>Popular</h1>
   </div>
-  </div>
-  <div class="row popular">
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-      <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
+</div>
+<!-- Start of popular movies cards description row -->
+<div class="row popular slider" id="popularwrapper"></div>
+<!-- End of popular movies cards for movie description row -->
+<!-- END OF POPULAR MOVIES CATEGORY -->  
 
 
-  </div>
-
-  <div class="row">
-   <div class="container headings">
+<!-- START OF RECENT MOVIES CATEGORY --> 
+<div class="row">
+  <div class="container headings">
     <h1>Recently Added</h1>
   </div>
-  </div>
-  <div class="row popular">
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-      <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
+</div>
+<!-- Start of recent movies cards description row -->
+<div class="row recent-movies slider1" id="recentmovieswrapper"></div>
+
+<!-- End of recent movies cards description row -->
+<!-- END OF RECENT MOVIES CATEGORY -->  
 
 
-  </div>
-  
-  <div class="row">
-   <div class="container headings">
+<!-- START OF COMEDY MOVIES CATEGORY --> 
+<div class="row">
+  <div class="container headings">
     <h1>Comedy</h1>
   </div>
-  </div>
-  <div class="row popular">
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-      <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
-    <div class="skew columns small-12 large-5 medium-5">
-      <img class="image" src="images/Happy-Valley.jpg">
-       <div id="rogue">
-        <h2>Rogue One: Star Wars</h2>
-        <h3>Felicity Jones | Diego Luna | Forest Whitaker</h3>
-        <h4>Action, Adventure, Sci-FI</h4>
-      </div>
-      <div id="floating-button">
-        <h2>8.1</h2>
-      </div>
-    </div>
+</div>
+<!-- Start of comedy movies cards description row -->
+<div class="row comedy slider2" id="comedywrapper"></div>
+<!-- End of comedy movies cards description row -->
+<!-- END OF COMEDY MOVIES CATEGORY -->  
 
-
-  </div>
-
-  <div class="row largebutton">
-    
-      <a href="#" class="fancy radius button">See More</a>
-    
-  </div>
-
+<div class="row largebutton">
+  <button class="fancy-button radius" onclick="loadData()">See More</button> 
+</div>
 
 <footer>
   <div class="row align-center">
@@ -226,7 +102,5 @@
     </div>
   </div>
 </footer>
-<script type="text/javascript" scr="js/jquery.js"></script>
-<script type="text/javascript" scr="js/main.js"></script>
 </body>
 </html>
