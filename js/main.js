@@ -1,18 +1,1010 @@
-// var r = new XMLHttpRequest();
-// r.open("GET", "https://api.themoviedb.org/3/movie/550?api_key=3c2e3323fb6685239c36ee9312c7bcb0", true);
-// r.onreadystatechange = function () {
-//   if (r.readyState != 4 || r.status != 200) return;
-//   const response = JSON.parse(r.responseText)
-//   const container = document.createElement("div");
-//   const image = document.createElement("img");
-//   const title = document.createElement("h1");
-//   image.src = "http://image.tmdb.org/t/p/original" + response.backdrop_path
-//   title.innerHTML = response.original_title;
-//   container.append(image);
-//   container.append(title);
-//   document.body.append(container);
-// };
-// r.send("banana=yellow");
+
+
+class MovieAPI {
+
+  constructor(APIName){
+    this.APIName = APIName;
+    
+    if (this.APIName=="themoviedb") {
+      this.rootURL="https://api.themoviedb.org/3/movie/";
+      this.token ="6c6774fdc0da477c7a3f3f7c03048117";
+      this.language = "&language=en-US";
+    }
+  }
+
+  getPopularMovies(callback){
+    this.getData('popular', function(results) {
+      callback(results);
+    });
+  }
+
+  getRecentMovies(callback){
+    this.getData('now_playing', function(results) {
+      callback(results);
+    });
+  }
+
+  getComedyMovies(callback){//getter becomes an attribute when you an instance
+    this.getData('upcoming', function(results) {
+      callback(results);
+    });
+  }
+
+  getActorName(callback, movieId){//getter becomes an attribute when you an instance
+    this.getActorData(movieId +'/credits', function(actorResults) {
+      callback(actorResults);
+    });
+  }
+
+  getMovieTrailer(callback, movieId){//getter becomes an attribute when you an instance
+    this.getMovieTrailerData(movieId + '/videos', function(trailerResults) {
+      callback(trailerResults);
+    });
+  }
+
+  // getActorName(callback){//getter becomes an attribute when you an instance
+  //   this.getData('movie_id', function(results) {
+  //     callback(results);
+  //   });
+  // }
+
+
+  getData(queryCategory, callback){//callback is a parameter that is a function that is used whenever getData is called
+    let AJAX = new XMLHttpRequest();
+    AJAX.open("GET", this.rootURL + queryCategory + '?api_key=' + this.token);
+    // AJAX.setRequestHeader("x-access-token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1OGExN2FiNjk1ODFhYzcwMmM0YmM4ZjciLCJnbG9iYWxhZG1pbiI6ZmFsc2UsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlLCJmdWxsbmFtZSI6Ikp1ZHkgTmplcnUiLCJlbWFpbCI6Im5qZXJ1anVkeTg3QHltYWlsLmNvbSIsInVzZXJuYW1lIjoianVkeV9uamVydSIsInBhc3N3b3JkIjoiJDJhJDA4JGNpbVlsY3V3WHViaEI0T2c3Q3BQRmVFMVJjaENBOGdSQ2tLNWszZDFHUkx6YkVsYXF3WjdDIiwiZG9tYWluIjoidmVmc2tvbGkuaXMiLCJtZXNzYWdlIjoic3R1ZHkgcHJvamVjdFxyXG5cclxuIiwiaWF0IjoxNDg3MDg3Nzg5LCJleHAiOjE0ODcxNzQxODl9.uejVEAYnZGQurhnztGLwdkonAP_YEenVraevyaGeTpc");
+    
+    AJAX.onreadystatechange = function(){
+
+      if(AJAX.readyState != 4 || AJAX.status != 200){
+        return;
+      }
+
+      let results = JSON.parse(AJAX.responseText).results;
+        callback(results);
+    };
+    AJAX.send();
+  }
+
+  getActorData(queryCategory, callback) {
+    let AJAX = new XMLHttpRequest();
+      AJAX.open("GET", this.rootURL  + queryCategory + '?api_key=' + this.token);
+      AJAX.onreadystatechange = function() {
+        if (AJAX.readyState != 4 || AJAX.status != 200) {
+         return;
+        }
+        let actorResults = JSON.parse(AJAX.responseText).cast;
+        // let crewResults = JSON.parse(AJAX.responseText).crew
+        callback(actorResults);
+      };
+      AJAX.send();
+  }
+
+  getMovieTrailerData(queryCategory, callback) {
+    let AJAX = new XMLHttpRequest();
+      AJAX.open("GET", this.rootURL  + queryCategory + '?api_key=' + this.token + this.language);
+      AJAX.onreadystatechange = function() {
+        if (AJAX.readyState != 4 || AJAX.status != 200) {
+         return;
+        }
+        let trailerResults = JSON.parse(AJAX.responseText).results;
+        callback(trailerResults);
+      };
+      AJAX.send();
+
+  }
+}
+
+
+
+const image_path = "http://image.tmdb.org/t/p/original";
+let theMovieDBInstance = new MovieAPI('themoviedb');
+
+//....................RENDER THE FRONT PAGE................//
+
+
+theMovieDBInstance.getPopularMovies(function(results) {
+  console.log(results);
+  let actorNames = [] ;
+  let genres = [];
+  let genreString = "";
+  for( let i=0; i< results.length; i++){
+    genres = APIS.genres.filter(function(genre){
+      return results[i].genre_ids.indexOf(genre.id) > -1; 
+    });
+    
+    genreString = "<h4>";
+    genres.forEach(function(genre){
+      genreString += genre.name +", " ;
+    });
+      genreString += "</h4>";
+
+    let title = results[i].title;
+    let image = results[i].poster_path;
+    let rating = results[i].vote_average;
+    let movieId = results[i].id;
+
+    theMovieDBInstance.getActorName(function(actorResults) {
+      actorNames.push({actors:actorResults, movieId: movieId});
+        for(let i=0; i<3; i++){
+          document.getElementById("A" + movieId).innerHTML += actorResults[i].name + " | ";
+        }//close for loop
+    },movieId);//close getActorName function
+
+    let movieTitle = '<div class="skew slide-single columns small-12 large-5 medium-5">\
+                        <img class="image" id="'+movieId+'"src="'+image_path + image+'"/> <div id="rogue">\
+                        <h2>'+title+'</h2><h3 id="A'+ movieId +'" class="movie-actors"></h3>\
+                        <h4>'+genreString+'</h4></div>\
+                        <div id="floating-button">\
+                          <h2>'+rating+'</h2>\
+                        </div>\
+                      </div>'
+
+    let wrapper = document.getElementById('popularwrapper');
+    wrapper.innerHTML += movieTitle;
+
+  }//close main for loop
+ $('.slider').slick({
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+
+});
+
+
+// RENDER ABOUT-MOVIE PAGE
+  $('.image').click(function() {
+    let AJAX = new XMLHttpRequest();
+    AJAX.open("GET", 'https://api.themoviedb.org/3/movie/'+ this.id +'?api_key=6c6774fdc0da477c7a3f3f7c03048117&language=en-US');
+    AJAX.onreadystatechange = function(){
+      if(AJAX.readyState != 4 || AJAX.status != 200){
+        return;
+      }
+      let results = JSON.parse(AJAX.responseText);
+      let movieId = results.id;
+
+      const thisMovieActors = actorNames.filter(function(actorName){
+        return actorName.movieId == results.id;
+      })[0];
+        console.log(thisMovieActors );
+
+      let actors = '<div class="row ">';
+      let mobileActors = '<div class="row ">';
+      
+      thisMovieActors.actors.forEach(function(actor, i){
+        if( i < 4){
+          let actorImage = image_path + actor.profile_path;
+            actors += `<div class="small-3 columns image-padding-1">
+                        <img src="${actorImage}">
+                        <div class="row labelrow">
+                            <div class="small-12 columns cast-name">${actor.name}</div>
+                        </div>
+                      </div>` ;
+
+            mobileActors += `<div class="small-3 columns image-padding">
+                              <img src="${actorImage}">
+                              <div class="row labelrow">
+                                  <div class="small-12 columns cast-name">${actor.name}</div>
+                              </div>
+                            </div>` ;
+        }//end if statement
+      });// end thisMovieActors function
+          actors += '</div>'
+          mobileActors += '</div>'
+
+       
+      let title = results.title;
+      let image = results.poster_path;
+      let rating = results.vote_average;
+      let year = results.release_date;
+      let duration = results.runtime;
+      let plot = results.tagline;
+      let storyline = results.overview;
+       
+
+      let movieDetails = 
+        `<!DOCTYPE html>
+        <html>
+        <head>
+          <title>Movie Info</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,700" rel="stylesheet">
+          <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+          <link rel="stylesheet" type="text/css" href="css/styles.css">
+        </head>
+        <body>
+        <header id="header" class=" zindex movieinfo-header img-bg"><img id ="trailer-image" class="image" src="${image_path + image}" style="background-image"/>
+            <div class="top-bar ">
+                <div class="top-barleft small-1">
+                  <ul class="menu">
+                      <li class="menu-text">
+                        <a href="#">
+                          <img class="header-logo" src="images/Moviebox-logo.png">
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+              <div class="top-barright small-1">
+                  <ul class="menu">
+                      <li>
+                        <img class="search-icon" src="images/search.png">
+                      </li>
+                  </ul>
+              </div>
+            </div><!--close top-bar-->
+        </header>     
+        <div class="skeww"></div>
+
+        <div class="rating small-3 medium-2 large-4">
+          <p id="rate-number">${rating}</p>
+            <p id="out-of">out of 10</p>
+        </div><!--close rating-->
+        <div class="row movie-poster small-5 medium-6 large-6 "><img class="image" src="${image_path + image}"/></div>
+        <div class="mobile-year small-6">
+            <div class="row">
+              <h3 class="column small-6">Year</h3>
+              <h3 class="column small-6">Duration</h3>
+          </div>
+          <div class="row ">
+              <h4 class="column small-6">${year}</h4>
+              <h4 class="column small-6">${duration}</h4>
+          </div>
+        </div><!--close mobile-year-->
+        <div class="info">
+            <div class="wrapper small-6 medium-6 large-6">
+                <div class="row">
+                  <h1 class="font">
+                    <span class="bold">${title}</span>
+                    <span class="bold"></span>
+                  </h1>
+                </div>
+              <div class="row">
+                <h2> ${year}</h2>
+              </div>
+              <div class="row">
+                <h3>
+                  <span class="bold-title">Director:</span>
+                  <span class="regular-name">Gareth Edwards</span>
+                </h3>
+              </div>
+              <div class="row writers">
+                <h3>
+                  <span class="bold-title">Writers:</span>
+                  <span class="regular-name">Chris Weitz and Tony Gilroy</span>
+                </h3>
+              </div>
+            </div><!--wrapper-->
+        </div><!--close info-->
+        <div class="more-info-wrapper">
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Duration: </span><span class="regular-font">${duration}</span></h3>
+            </div>
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Genre: </span><span class="regular-font">${genreString}</span></h3>
+            </div>
+        </div><!--close more-info-wrapper-->
+        <!---
+        class mobile-storyline  and mobile-main-cast is only displayed in mobile devices
+        -->
+        <div class="mobile-storyline">
+          <div class="row">
+              <h3 class="column small-6">Storyline</h3>
+          </div>
+          <div class="row">
+              <div class="column small-12"">
+                  <div class="mobile-storyline-info">${storyline}</div> 
+              </div>
+          </div>
+        </div><!--close mobile-storyline-->
+        <div class="mobile-main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${mobileActors}
+          
+        </div> <!--close mobile-main-cast-->
+        <div class="movie-summary">
+          <div class="row">
+              <h3 class="column small-6">Stills</h3>
+              <h3 class="column small-6 plot-heading">Plot</h3>
+          </div>
+          <div class="row">
+              <div class="small-12 medium-6 large-6 columns movie-stills">
+                  <img class="small-6 columns" src="${image_path + image}">
+                  <img class="small-6 columns" src="${image_path + image}">
+              </div>
+              <div class="small-12 medium-6 large-6 columns">
+                  <div class="plot">${plot}</div> 
+                  <h3 class="storyline">Storyline</h3>
+              </div>
+          </div>
+        </div><!--close movie-summary-->
+        <div class="movie-summary-2">
+          <div class="row">
+              <div class="small-6 columns movie-stills-2">
+                  <img class="small-3 columns" src="${image_path + image}">
+                  <img class="small-3 columns" src="${image_path + image}">
+              </div>
+              <div class="small-6 columns">
+                  <div class="storyline-info">
+                  ${storyline}
+                  </div>   
+              </div>
+          </div>
+        </div><!--close movie-summary-2-->
+        <div class="main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${actors}
+        </div><!--close main-cast-->
+          <div id="myId">
+            
+          </div>
+        <footer>
+          <div class="row align-center">
+            <img class="footer-logo" src="images/Moviebox-logo.png">
+          </div>
+          <div class="row align-center">
+            <div class="columns large-2 medium-2 small-12">
+              <h4>About</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Term of Use</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>FAQ</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Privacy</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Contact Us</h4> 
+            </div>
+          </div>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        </footer>
+        </body>
+        </html>`
+
+        document.body.innerHTML = movieDetails;
+        document.getElementById("header").style.backgroundImage="url('"+image_path + image +"')";
+
+      };//close AJAX function
+      AJAX.send();
+    });//close .image function
+ // close popular movies function
+
+
+
+
+
+//.............RENDER RECENT MOVIES..........\\ 
+
+theMovieDBInstance.getRecentMovies(function(results) {
+
+    let actorNames = [] ;
+    let genres = [];
+    let genreString = "";
+
+    for( let i=0; i< results.length; i++){
+      genres = APIS.genres.filter(function(genre){
+        return results[i].genre_ids.indexOf(genre.id) > -1; 
+      });
+      
+      genreString = "<h4>";
+      genres.forEach(function(genre){
+        genreString += genre.name +", " ;
+      });
+        genreString += "</h4>";
+
+      let title = results[i].title;
+      let image = results[i].poster_path;
+      let rating = results[i].vote_average;
+      let movieId = results[i].id;
+
+      theMovieDBInstance.getActorName(function(actorResults) {
+        console.log(actorResults);
+        actorNames.push({actors:actorResults, movieId: movieId});
+    
+        for(let i=0; i<3; i++){
+          document.getElementById("B" + movieId).innerHTML += actorResults[i].name + " | ";
+        
+        }//close for loop
+      },movieId);//close getActorName function
+       
+      let movieTitle = '<div class="skew slide-single columns small-12 large-5 medium-5">\
+                          <img class="image" id="'+movieId+'"src="'+image_path + image+'"/> <div id="rogue">\
+                          <h2>'+title+'</h2><h3 id="B'+ movieId +'" class="movie-actors"></h3>\
+                          <h4>'+genreString+'</h4></div>\
+                          <div id="floating-button">\
+                            <h2>'+rating+'</h2>\
+                          </div>\
+                        </div>'
+
+      let wrapper = document.getElementById('recentmovieswrapper');
+      wrapper.innerHTML += movieTitle;
+       
+    }//close for loop
+ $('.slider1').slick({
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+});
+  // RENDER ABOUT-MOVIE PAGE
+  $('.image').click(function() {
+    let AJAX = new XMLHttpRequest();
+    AJAX.open("GET", 'https://api.themoviedb.org/3/movie/'+ this.id +'?api_key=6c6774fdc0da477c7a3f3f7c03048117&language=en-US');
+    AJAX.onreadystatechange = function(){
+      if(AJAX.readyState != 4 || AJAX.status != 200){
+        return;
+      }
+      let results = JSON.parse(AJAX.responseText);
+      let movieId = results.id;
+
+      const thisMovieActors = actorNames.filter(function(actorName){
+        return actorName.movieId == results.id;
+      })[0];
+        console.log(thisMovieActors );
+
+      let actors = '<div class="row ">';
+      let mobileActors = '<div class="row ">';
+      
+      thisMovieActors.actors.forEach(function(actor, i){
+        if( i < 4){
+          let actorImage = image_path + actor.profile_path;
+            actors += `<div class="small-3 columns image-padding-1">
+                        <img src="${actorImage}">
+                        <div class="row labelrow">
+                            <div class="small-12 columns cast-name">${actor.name}</div>
+                        </div>
+                      </div>` ;
+
+            mobileActors += `<div class="small-3 columns image-padding">
+                              <img src="${actorImage}">
+                              <div class="row labelrow">
+                                  <div class="small-12 columns cast-name">${actor.name}</div>
+                              </div>
+                            </div>` ;
+        }//end if statement
+      });// end thisMovieActors function
+          actors += '</div>'
+          mobileActors += '</div>'
+
+       
+      let title = results.title;
+      let image = results.poster_path;
+      let rating = results.vote_average;
+      let year = results.release_date;
+      let duration = results.runtime;
+      let plot = results.tagline;
+      let storyline = results.overview;
+       
+
+      let movieDetails = 
+        `<!DOCTYPE html>
+        <html>
+        <head>
+          <title>Movie Info</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,700" rel="stylesheet">
+          <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+          <link rel="stylesheet" type="text/css" href="css/styles.css">
+        </head>
+        <body>
+        <header id="header" class=" zindex movieinfo-header img-bg"><img id ="trailer-image" class="image" src="${image_path + image}" style="background-image"/>
+            <div class="top-bar ">
+                <div class="top-barleft small-1">
+                  <ul class="menu">
+                      <li class="menu-text">
+                        <a href="#">
+                          <img class="header-logo" src="images/Moviebox-logo.png">
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+              <div class="top-barright small-1">
+                  <ul class="menu">
+                      <li>
+                        <img class="search-icon" src="images/search.png">
+                      </li>
+                  </ul>
+              </div>
+            </div><!--close top-bar-->
+        </header>     
+        <div class="skeww"></div>
+
+        <div class="rating small-3 medium-2 large-4">
+          <p id="rate-number">${rating}</p>
+            <p id="out-of">out of 10</p>
+        </div><!--close rating-->
+        <div class="row movie-poster small-5 medium-6 large-6 "><img class="image" src="${image_path + image}"/></div>
+        <div class="mobile-year small-6">
+            <div class="row">
+              <h3 class="column small-6">Year</h3>
+              <h3 class="column small-6">Duration</h3>
+          </div>
+          <div class="row ">
+              <h4 class="column small-6">${year}</h4>
+              <h4 class="column small-6">${duration}</h4>
+          </div>
+        </div><!--close mobile-year-->
+        <div class="info">
+            <div class="wrapper small-6 medium-6 large-6">
+                <div class="row">
+                  <h1 class="font">
+                    <span class="bold">${title}</span>
+                    <span class="bold"></span>
+                  </h1>
+                </div>
+              <div class="row">
+                <h2> ${year}</h2>
+              </div>
+              <div class="row">
+                <h3>
+                  <span class="bold-title">Director:</span>
+                  <span class="regular-name">Gareth Edwards</span>
+                </h3>
+              </div>
+              <div class="row writers">
+                <h3>
+                  <span class="bold-title">Writers:</span>
+                  <span class="regular-name">Chris Weitz and Tony Gilroy</span>
+                </h3>
+              </div>
+            </div><!--wrapper-->
+        </div><!--close info-->
+        <div class="more-info-wrapper">
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Duration: </span><span class="regular-font">${duration}</span></h3>
+            </div>
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Genre: </span><span class="regular-font">${genreString}</span></h3>
+            </div>
+        </div><!--close more-info-wrapper-->
+        <!---
+        class mobile-storyline  and mobile-main-cast is only displayed in mobile devices
+        -->
+        <div class="mobile-storyline">
+          <div class="row">
+              <h3 class="column small-6">Storyline</h3>
+          </div>
+          <div class="row">
+              <div class="column small-12"">
+                  <div class="mobile-storyline-info">${storyline}</div> 
+              </div>
+          </div>
+        </div><!--close mobile-storyline-->
+        <div class="mobile-main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${mobileActors}
+          
+        </div> <!--close mobile-main-cast-->
+        <div class="movie-summary">
+          <div class="row">
+              <h3 class="column small-6">Stills</h3>
+              <h3 class="column small-6 plot-heading">Plot</h3>
+          </div>
+          <div class="row">
+              <div class="small-12 medium-6 large-6 columns movie-stills">
+                  <img class="small-6 columns" src="${image_path + image}">
+                  <img class="small-6 columns" src="${image_path + image}">
+              </div>
+              <div class="small-12 medium-6 large-6 columns">
+                  <div class="plot">${plot}</div> 
+                  <h3 class="storyline">Storyline</h3>
+              </div>
+          </div>
+        </div><!--close movie-summary-->
+        <div class="movie-summary-2">
+          <div class="row">
+              <div class="small-6 columns movie-stills-2">
+                  <img class="small-3 columns" src="${image_path + image}">
+                  <img class="small-3 columns" src="${image_path + image}">
+              </div>
+              <div class="small-6 columns">
+                  <div class="storyline-info">
+                  ${storyline}
+                  </div>   
+              </div>
+          </div>
+        </div><!--close movie-summary-2-->
+        <div class="main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${actors}
+        </div><!--close main-cast-->
+          <div id="myId">
+            
+          </div>
+        <footer>
+          <div class="row align-center">
+            <img class="footer-logo" src="images/Moviebox-logo.png">
+          </div>
+          <div class="row align-center">
+            <div class="columns large-2 medium-2 small-12">
+              <h4>About</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Term of Use</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>FAQ</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Privacy</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Contact Us</h4> 
+            </div>
+          </div>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        </footer>
+        </body>
+        </html>`
+
+        document.body.innerHTML = movieDetails;
+        document.getElementById("header").style.backgroundImage="url('"+image_path + image +"')";
+
+      };//close AJAX function
+      AJAX.send();
+    });//close .image function
+
+
+
+//RENDER COMEDY MOVIES
+theMovieDBInstance.getComedyMovies(function(results) {
+    console.log(results);
+    let actorNames = [] ;
+    let genres = [];
+    let genreString = "";
+    for( let i=0; i< results.length; i++){
+        genres = APIS.genres.filter(function(genre){
+          return results[i].genre_ids.indexOf(genre.id) > -1; 
+        });
+      
+        genreString = "<h4>";
+        genres.forEach(function(genre){
+          genreString += genre.name +", " ;
+        });
+        genreString += "</h4>";
+
+      let title = results[i].title;
+      let image = results[i].poster_path;
+      let rating = results[i].vote_average;
+      let movieId = results[i].id;
+
+      theMovieDBInstance.getActorName(function(actorResults) {
+        console.log(actorResults);
+        actorNames.push({actors:actorResults, movieId: movieId});
+    
+        for(let i=0; i<3; i++){
+          document.getElementById("C" + movieId).innerHTML += actorResults[i].name + " | ";
+        
+        }//close for loop
+      },movieId);//close getActorName function
+       
+
+        let movieTitle = '<div class="skew slide-single columns small-12 large-5 medium-5">\
+                          <img class="image" id="'+movieId+'"src="'+image_path + image+'"/> <div id="rogue">\
+                          <h2>'+title+'</h2><h3 id="C'+ movieId +'" class="movie-actors"></h3>\
+                          <h4>'+genreString+'</h4></div>\
+                          <div id="floating-button">\
+                            <h2>'+rating+'</h2>\
+                          </div>\
+                        </div>'
+
+
+      let wrapper = document.getElementById('comedywrapper');
+      wrapper.innerHTML += movieTitle;
+    }
+     $('.slider2').slick({
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+});
+//close for loop
+  // RENDER ABOUT-MOVIE PAGE
+  $('.image').click(function() {
+    let AJAX = new XMLHttpRequest();
+    AJAX.open("GET", 'https://api.themoviedb.org/3/movie/'+ this.id +'?api_key=6c6774fdc0da477c7a3f3f7c03048117&language=en-US');
+    AJAX.onreadystatechange = function(){
+      if(AJAX.readyState != 4 || AJAX.status != 200){
+        return;
+      }
+      let results = JSON.parse(AJAX.responseText);
+      let movieId = results.id;
+
+      const thisMovieActors = actorNames.filter(function(actorName){
+        return actorName.movieId == results.id;
+      })[0];
+        console.log(thisMovieActors );
+
+      let actors = '<div class="row ">';
+      let mobileActors = '<div class="row ">';
+      
+      thisMovieActors.actors.forEach(function(actor, i){
+        if( i < 4){
+          let actorImage = image_path + actor.profile_path;
+            actors += `<div class="small-3 columns image-padding-1">
+                        <img src="${actorImage}">
+                        <div class="row labelrow">
+                            <div class="small-12 columns cast-name">${actor.name}</div>
+                        </div>
+                      </div>` ;
+
+            mobileActors += `<div class="small-3 columns image-padding">
+                              <img src="${actorImage}">
+                              <div class="row labelrow">
+                                  <div class="small-12 columns cast-name">${actor.name}</div>
+                              </div>
+                            </div>` ;
+        }//end if statement
+      });// end thisMovieActors function
+          actors += '</div>'
+          mobileActors += '</div>'
+
+       
+      let title = results.title;
+      let image = results.poster_path;
+      let rating = results.vote_average;
+      let year = results.release_date;
+      let duration = results.runtime;
+      let plot = results.tagline;
+      let storyline = results.overview;
+       
+
+      let movieDetails = 
+        `<!DOCTYPE html>
+        <html>
+        <head>
+          <title>Movie Info</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto:400,700" rel="stylesheet">
+          <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+          <link rel="stylesheet" type="text/css" href="css/styles.css">
+        </head>
+        <body>
+        <header id="header" class=" zindex movieinfo-header img-bg"><img id ="trailer-image" class="image" src="${image_path + image}" style="background-image"/>
+            <div class="top-bar ">
+                <div class="top-barleft small-1">
+                  <ul class="menu">
+                      <li class="menu-text">
+                        <a href="#">
+                          <img class="header-logo" src="images/Moviebox-logo.png">
+                        </a>
+                      </li>
+                  </ul>
+                </div>
+              <div class="top-barright small-1">
+                  <ul class="menu">
+                      <li>
+                        <img class="search-icon" src="images/search.png">
+                      </li>
+                  </ul>
+              </div>
+            </div><!--close top-bar-->
+        </header>     
+        <div class="skeww"></div>
+
+        <div class="rating small-3 medium-2 large-4">
+          <p id="rate-number">${rating}</p>
+            <p id="out-of">out of 10</p>
+        </div><!--close rating-->
+        <div class="row movie-poster small-5 medium-6 large-6 "><img class="image" src="${image_path + image}"/></div>
+        <div class="mobile-year small-6">
+            <div class="row">
+              <h3 class="column small-6">Year</h3>
+              <h3 class="column small-6">Duration</h3>
+          </div>
+          <div class="row ">
+              <h4 class="column small-6">${year}</h4>
+              <h4 class="column small-6">${duration}</h4>
+          </div>
+        </div><!--close mobile-year-->
+        <div class="info">
+            <div class="wrapper small-6 medium-6 large-6">
+                <div class="row">
+                  <h1 class="font">
+                    <span class="bold">${title}</span>
+                    <span class="bold"></span>
+                  </h1>
+                </div>
+              <div class="row">
+                <h2> ${year}</h2>
+              </div>
+              <div class="row">
+                <h3>
+                  <span class="bold-title">Director:</span>
+                  <span class="regular-name">Gareth Edwards</span>
+                </h3>
+              </div>
+              <div class="row writers">
+                <h3>
+                  <span class="bold-title">Writers:</span>
+                  <span class="regular-name">Chris Weitz and Tony Gilroy</span>
+                </h3>
+              </div>
+            </div><!--wrapper-->
+        </div><!--close info-->
+        <div class="more-info-wrapper">
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Duration: </span><span class="regular-font">${duration}</span></h3>
+            </div>
+            <div class="row">
+              <h3 class="column small-6"><span class="bold-font">Genre: </span><span class="regular-font">${genreString}</span></h3>
+            </div>
+        </div><!--close more-info-wrapper-->
+        <!---
+        class mobile-storyline  and mobile-main-cast is only displayed in mobile devices
+        -->
+        <div class="mobile-storyline">
+          <div class="row">
+              <h3 class="column small-6">Storyline</h3>
+          </div>
+          <div class="row">
+              <div class="column small-12"">
+                  <div class="mobile-storyline-info">${storyline}</div> 
+              </div>
+          </div>
+        </div><!--close mobile-storyline-->
+        <div class="mobile-main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${mobileActors}
+          
+        </div> <!--close mobile-main-cast-->
+        <div class="movie-summary">
+          <div class="row">
+              <h3 class="column small-6">Stills</h3>
+              <h3 class="column small-6 plot-heading">Plot</h3>
+          </div>
+          <div class="row">
+              <div class="small-12 medium-6 large-6 columns movie-stills">
+                  <img class="small-6 columns" src="${image_path + image}">
+                  <img class="small-6 columns" src="${image_path + image}">
+              </div>
+              <div class="small-12 medium-6 large-6 columns">
+                  <div class="plot">${plot}</div> 
+                  <h3 class="storyline">Storyline</h3>
+              </div>
+          </div>
+        </div><!--close movie-summary-->
+        <div class="movie-summary-2">
+          <div class="row">
+              <div class="small-6 columns movie-stills-2">
+                  <img class="small-3 columns" src="${image_path + image}">
+                  <img class="small-3 columns" src="${image_path + image}">
+              </div>
+              <div class="small-6 columns">
+                  <div class="storyline-info">
+                  ${storyline}
+                  </div>   
+              </div>
+          </div>
+        </div><!--close movie-summary-2-->
+        <div class="main-cast">
+          <div class="row">
+              <h3 class="column small-6">Cast</h3>
+          </div>
+          ${actors}
+        </div><!--close main-cast-->
+          <div id="myId">
+            
+          </div>
+        <footer>
+          <div class="row align-center">
+            <img class="footer-logo" src="images/Moviebox-logo.png">
+          </div>
+          <div class="row align-center">
+            <div class="columns large-2 medium-2 small-12">
+              <h4>About</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Term of Use</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>FAQ</h4>
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Privacy</h4> 
+            </div>
+            <div class="columns large-2 medium-2 small-12">
+              <h4>Contact Us</h4> 
+            </div>
+          </div>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        </footer>
+        </body>
+        </html>`
+
+        document.body.innerHTML = movieDetails;
+        document.getElementById("header").style.backgroundImage="url('"+image_path + image +"')";
+
+      };//close AJAX function
+      AJAX.send();
+    });//close .image function
+
+
+
+
+
 
 
 
@@ -21,12 +1013,12 @@
 // var AJAX = new XMLHttpRequest();
 // AJAX.open("GET", "https://api.themoviedb.org/3/movie/550?api_key=6c6774fdc0da477c7a3f3f7c03048117");
 // AJAX.onreadystatechange = function(){
-// 	if(AJAX.readyState != 4 || AJAX.status != 200){
-// 		return;
-// 	}
-// 	const response = JSON.parse(AJAX.responseText)
-// 	// data = AJAX.responseText;
-// 	console.log(response);
+//  if(AJAX.readyState != 4 || AJAX.status != 200){
+//      return;
+//  }
+//  const response = JSON.parse(AJAX.responseText)
+//  // data = AJAX.responseText;
+//  console.log(response);
 // }
 // AJAX.send();
 
@@ -47,1764 +1039,17 @@
 //     }
 // });
 
+$( document ).ready(function() {
+    
+});
 
 
 
 
-//MOVIE LIST
-// let movieDatabases = [];
 
 
 
-
-// // get data fromkvikmyndir
-// let AJAX = new XMLHttpRequest();
-// AJAX.open("GET", "http://api.kvikmyndir.is/upcoming");
-// AJAX.setRequestHeader("x-access-token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1OGExN2FiNjk1ODFhYzcwMmM0YmM4ZjciLCJnbG9iYWxhZG1pbiI6ZmFsc2UsImFkbWluIjpmYWxzZSwiYWN0aXZlIjp0cnVlLCJmdWxsbmFtZSI6Ikp1ZHkgTmplcnUiLCJlbWFpbCI6Im5qZXJ1anVkeTg3QHltYWlsLmNvbSIsInVzZXJuYW1lIjoianVkeV9uamVydSIsInBhc3N3b3JkIjoiJDJhJDA4JGNpbVlsY3V3WHViaEI0T2c3Q3BQRmVFMVJjaENBOGdSQ2tLNWszZDFHUkx6YkVsYXF3WjdDIiwiZG9tYWluIjoidmVmc2tvbGkuaXMiLCJtZXNzYWdlIjoic3R1ZHkgcHJvamVjdFxyXG5cclxuIiwiaWF0IjoxNDg2OTgxMzE3LCJleHAiOjE0ODcwNjc3MTd9.A3CS_PEWOhuas0dt5_cxBBAeiNqJ5XCXYdp515O55KA");
-// const renderMovies = function(){
-// 	if(AJAX.readyState != 4 || AJAX.status != 200){
-// 		return;
-// 	}
-// 	let movieList = JSON.parse(AJAX.responseText)
-// 	console.log(movieList);
-
-// 	// movieDB = response;
-
-// 	getMovie(movieList);
-// }
-// AJAX.onreadystatechange = renderMovies
-// AJAX.send();
-
-
-// class Movie {
-// 	constructor(info){
-// 		$.extend(this,info);
-// 	}
-
-// 	// get title(){
-// 	// 	return this.title;
-// 	// }
-// }
-
-// function getMovie (movieList){
-
-// 	for( let movieInfo of movieList){
-// 		let movieDatabase =new Movie(movieInfo);
-// 		movieDatabases.push(movieDatabase)
-// 	}
-
-// 	for( let movieDatabase of movieDatabases){
-// 		displayMovie(movieDatabase);
-// 	}
-
-//  	console.log(movieDatabases);
-//  	console.log(movieList);
-
-// function displayMovie(movieDatabase){
-//  let image = document.createElement("img");
-
-//   image.src = movieDatabase.poster;
-
-// 	let title = document.createElement("h1");
-// 	title.innerHTML = movieDatabase.title;
-// 	document.querySelector("#myId").appendChild(title);
-// }
-// }
-
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2016 Franco Cavestri
- *
- * https://github.com/cavestri/themoviedb-javascript-library
- *
- */
-
-var theMovieDb = {};
-
-theMovieDb.common = {
-    api_key: "7fd909842e93334fc23e423083861d34",
-    base_uri: "http://api.themoviedb.org/3/",
-    images_uri: "http://image.tmdb.org/t/p/",
-    timeout: 5000,
-    generateQuery: function (options) {
-        'use strict';
-        var myOptions, query, option;
-
-        myOptions = options || {};
-        query = "7fd909842e93334fc23e423083861d34" + theMovieDb.common.api_key;
-
-        if (Object.keys(myOptions).length > 0) {
-            for (option in myOptions) {
-                if (myOptions.hasOwnProperty(option) && option !== "id" && option !== "body") {
-                    query = query + "&" + option + "=" + myOptions[option];
-                }
-            }
-        }
-        return query;
-    },
-    validateCallbacks: function (callbacks) {
-        'use strict';
-        if (typeof callbacks[0] !== "function" || typeof callbacks[1] !== "function") {
-            throw "Success and error parameters must be functions!";
-        }
-    },
-    validateRequired: function (args, argsReq, opt, optReq, allOpt) {
-        'use strict';
-        var i, allOptional;
-
-        allOptional = allOpt || false;
-
-        if (args.length !== argsReq) {
-            throw "The method requires  " + argsReq + " arguments and you are sending " + args.length + "!";
-        }
-
-        if (allOptional) {
-            return;
-        }
-
-        if (argsReq > 2) {
-            for (i = 0; i < optReq.length; i = i + 1) {
-                if (!opt.hasOwnProperty(optReq[i])) {
-                    throw optReq[i] + " is a required parameter and is not present in the options!";
-                }
-            }
-        }
-    },
-    getImage: function (options) {
-        'use strict';
-        return theMovieDb.common.images_uri + options.size + "/" + options.file;
-    },
-    client: function (options, success, error) {
-        'use strict';
-        var method, status, xhr;
-
-        method = options.method || "GET";
-        status = options.status || 200;
-        xhr = new XMLHttpRequest();
-
-        xhr.ontimeout = function () {
-            error('{"status_code":408,"status_message":"Request timed out"}');
-        };
-
-        xhr.open(method, theMovieDb.common.base_uri + options.url, true);
-
-        if(options.method === "POST") {
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.setRequestHeader("Accept", "application/json");
-        }
-
-        xhr.timeout = theMovieDb.common.timeout;
-
-        xhr.onload = function (e) {
-            if (xhr.readyState === 4) {
-                if (xhr.status === status) {
-                    success(xhr.responseText);
-                } else {
-                    error(xhr.responseText);
-                }
-            } else {
-                error(xhr.responseText);
-            }
-        };
-
-        xhr.onerror = function (e) {
-            error(xhr.responseText);
-        };
-        if (options.method === "POST") {
-            xhr.send(JSON.stringify(options.body));
-        } else {
-            xhr.send(null);
-        }
-    }
-};
-
-theMovieDb.configurations = {
-    getConfiguration: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "configuration" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.account = {
-    getInformation: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "account" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getLists: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "account/" + options.id + "/lists" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getFavoritesMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "account/" + options.id + "/favorite_movies" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    addFavorite: function (options, success, error) {
-        'use strict';
-        var body;
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "movie_id", "favorite"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        body = {
-            "movie_id": options.movie_id,
-            "favorite": options.favorite
-        }
-
-
-        theMovieDb.common.client(
-            {
-                url: "account/" + options.id + "/favorite" + theMovieDb.common.generateQuery(options),
-                status: 201,
-                method: "POST",
-                body: body
-            },
-            success,
-            error
-        );
-    },
-    getRatedMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "account/" + options.id + "/rated_movies" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getWatchlist: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "account/" + options.id + "/movie_watchlist" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    addMovieToWatchlist: function (options, success, error) {
-        'use strict';
-
-        var body;
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "movie_id", "movie_watchlist"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        body = {
-            "movie_id": options.movie_id,
-            "movie_watchlist": options.movie_watchlist
-        }
-
-        theMovieDb.common.client(
-            {
-                url: "account/" + options.id + "/movie_watchlist" + theMovieDb.common.generateQuery(options),
-                method: "POST",
-                status: 201,
-                body: body
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.authentication = {
-    generateToken: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "authentication/token/new" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    },
-    askPermissions: function(options){
-       'use strict';
-
-       window.open("https://www.themoviedb.org/authenticate/" + options.token + "?redirect_to=" + options.redirect_to);
-
-    },
-    validateUser: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["request_token", "username", "password"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "authentication/token/validate_with_login" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    generateSession: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["request_token"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "authentication/session/new" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    generateGuestSession: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "authentication/guest_session/new" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.certifications = {
-    getList: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "certification/movie/list" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.changes = {
-    getMovieChanges: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/changes" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getPersonChanges: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/changes" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.collections = {
-    getCollection: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "collection/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCollectionImages: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "collection/" + options.id + "/images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-
-};
-
-theMovieDb.companies = {
-    getCompany: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "company/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCompanyMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "company/" + options.id + "/movies" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-
-};
-
-theMovieDb.credits = {
-    getCredit: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "credit/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.discover = {
-    getMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "discover/movie" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTvShows: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "discover/tv" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-
-};
-
-theMovieDb.find = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id", "external_source"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "find/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.genres = {
-    getList: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "genre/list" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "genre/" + options.id + "/movies" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-
-};
-
-theMovieDb.jobs = {
-    getList: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "job/list" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.keywords = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "keyword/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "keyword/" + options.id + "/movies" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.lists = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "list/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getStatusById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id", "movie_id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "list/" + options.id + "/item_status" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    addList: function (options, success, error) {
-        'use strict';
-
-        var body;
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "name", "description"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        body = {
-            "name": options.name,
-            "description": options.description
-        };
-
-        delete options.name;
-        delete options.description;
-
-        if(options.hasOwnProperty("language")) {
-            body["language"] = options.language;
-
-            delete options.language;
-        }
-
-        theMovieDb.common.client(
-            {
-                method:  "POST",
-                status: 201,
-                url: "list" + theMovieDb.common.generateQuery(options),
-                body: body
-            },
-            success,
-            error
-        );
-    },
-    addItem: function (options, success, error) {
-        'use strict';
-
-        var body;
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "media_id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        body = {
-            "media_id": options.media_id
-        };
-
-        theMovieDb.common.client(
-            {
-                method:  "POST",
-                status: 201,
-                url: "list/" + options.id + "/add_item" + theMovieDb.common.generateQuery(options),
-                body: body
-            },
-            success,
-            error
-        );
-    },
-    removeItem: function (options, success, error) {
-        'use strict';
-
-        var body;
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "media_id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        body = {
-            "media_id": options.media_id
-        };
-
-        theMovieDb.common.client(
-            {
-                method:  "POST",
-                status: 201,
-                url: "list/" + options.id + "/remove_item" + theMovieDb.common.generateQuery(options),
-                body: body
-            },
-            success,
-            error
-        );
-    },
-    removeList: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                method:  "DELETE",
-                status: 204,
-                url: "list/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    clearList: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "confirm"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                method:  "POST",
-                status: 204,
-                body: {},
-                url: "list/" + options.id + "/clear" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.movies = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getAlternativeTitles: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/alternative_titles" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getImages: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getKeywords: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/keywords" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getReleases: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/releases" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTrailers: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/trailers" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getVideos: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/videos" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTranslations: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/translations" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getSimilarMovies: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/similar_movies" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getReviews: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/reviews" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getLists: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/lists" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getChanges: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/changes" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getLatest: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/latest" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    },
-    getUpcoming: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/upcoming" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getNowPlaying: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/now_playing" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getPopular: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/popular" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTopRated: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/top_rated" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getStatus: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "movie/" + options.id + "/account_states" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    rate: function (options, rate, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 4, options, ["session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                method:  "POST",
-                status: 201,
-                url: "movie/" + options.id + "/rating" + theMovieDb.common.generateQuery(options),
-                body: { "value": rate }
-            },
-            success,
-            error
-        );
-    },
-    rateGuest: function (options, rate, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 4, options, ["guest_session_id", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                method:  "POST",
-                status: 201,
-                url: "movie/" + options.id + "/rating" + theMovieDb.common.generateQuery(options),
-                body: { "value": rate }
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.networks = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "network/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.people = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getMovieCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/movie_credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTvCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/tv_credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/combined_credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getExternalIds: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/external_ids" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getImages: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-	getTaggedImages: function(options, sucess, error) {
-		'use strict';
-
-		theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-		 theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/tagged_images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-	},
-    getChanges: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/" + options.id + "/changes" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getPopular: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/popular" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getLatest: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "person/latest" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.reviews = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "review/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.search = {
-    getMovie: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/movie" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCollection: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/collection" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTv: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/tv" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getPerson: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/person" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getList: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/list" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCompany: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/company" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getKeyword: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/keyword" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getMulti: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "search/multi" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.timezones = {
-    getList: function (success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 2);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "timezones/list" + theMovieDb.common.generateQuery()
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.tv = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getSimilar: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/similar" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getExternalIds: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/external_ids" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getImages: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTranslations: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/translations" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getVideos: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/videos" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getOnTheAir: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/on_the_air" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getAiringToday: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/airing_today" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getTopRated: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/top_rated" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getPopular: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, "", "", true);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/popular" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.tvSeasons = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getExternalIds: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/external_ids" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getImages: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
-
-theMovieDb.tvEpisodes = {
-    getById: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/episode/" + options.episode_number + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getCredits: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/episode/" + options.episode_number + "/credits" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getExternalIds: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/episode/" + options.episode_number + "/external_ids" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    },
-    getImages: function (options, success, error) {
-        'use strict';
-
-        theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
-
-        theMovieDb.common.validateCallbacks([success, error]);
-
-        theMovieDb.common.client(
-            {
-                url: "tv/" + options.id + "/season/" + options.season_number + "/episode/" + options.episode_number + "/images" + theMovieDb.common.generateQuery(options)
-            },
-            success,
-            error
-        );
-    }
-};
+        
 
 
 
