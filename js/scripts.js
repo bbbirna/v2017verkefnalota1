@@ -63,6 +63,7 @@ class SearchResult {
 
 
 let searchInput = "";
+let filterSearchArray = [];
 
 $(document).ready(function() {
 	$(".search-bar").keyup(function() {
@@ -82,7 +83,9 @@ $(document).ready(function() {
 
 				let imageURL = "http://image.tmdb.org/t/p/w185/" + response.results[i].profile_path;
 
-
+				if (response.results[i].profile_path == null) {
+					imageURL = "images/noImage.jpg"
+				}
 				
 				console.log(imageURL);
 
@@ -123,6 +126,9 @@ $(document).ready(function() {
 	  document.getElementById("sh-num2").innerHTML = handleValue2;
 	  showHandleValue(handleValue1, ".slider1", "#sh-num1");
 	  showHandleValue(handleValue2, ".slider1", "#sh-num2");
+	  filterSearchArray[0] = handleValue1;
+	  filterSearchArray[1] = handleValue2;
+	  
 	});
 
 	$('.slider2').on('moved.zf.slider', function(){
@@ -134,6 +140,8 @@ $(document).ready(function() {
 	  document.getElementById("sh-num4").innerHTML = handleValue4;
 	  showHandleValue(handleValue3, ".slider2", "#sh-num3");
 	  showHandleValue(handleValue4, ".slider2", "#sh-num4");
+	  filterSearchArray[2] = handleValue3;
+	  filterSearchArray[3] = handleValue4;
 	});
 
 	$(window).on('resize', function() {
@@ -198,7 +206,7 @@ $(document).ready(function() {
 
 
 
-$(document).ready(function() {
+$(document).ready( function() {
 	$("#btn-showmore").click( function() {
 		
 		if ($("#btn-showmore").hasClass("showmore-closed")) {
@@ -221,14 +229,12 @@ $(document).ready(function() {
 	
 	});
 
-	$(".btn-genre").click(function() {
-		$(this).toggleClass("btn-genre-fill");
-	});
+
 
 	
 
 	//til að fá genres í search
-
+	var selectedGenres = [];
 	var r = new XMLHttpRequest();
 	r.open("GET", "https://api.themoviedb.org/3/genre/movie/list?api_key=7fd909842e93334fc23e423083861d34&language=en-US", true);
 	r.onreadystatechange = function () {
@@ -257,35 +263,44 @@ $(document).ready(function() {
 			$(genreBtn).attr("data-id", response.genres[i].id);
 			$(genreBtn).attr("onclick", testfunciton);
 
-
-			// $(genreBtn).click(console.log($(genreBtn).attr("id")));
-
-			// $("#genre-rows").hide();
-			// $("#genre-rows:nth-child(2)").show();
 			$("#genre-rows .row-genre").hide();
 			$("#genre-rows .row-genre:nth-child(-n + 3)").show();
 
+
+
 		}
+		$(".btn-genre").click( function() {
+
+				if ($(this).hasClass("btn-genre-fill")) {
+					var btnIndex = selectedGenres.indexOf($(this).data("id"));
+					selectedGenres.splice(btnIndex, 1)
+					
+				}
+
+				else {
+					selectedGenres.push($(this).data("id"));
+					filterSearchArray[4] = selectedGenres;
+				}
+
+				$(this).toggleClass("btn-genre-fill");
+
+				
+			console.log(selectedGenres);
+
+
+
+			
+		});
 
 		
 		
 	
 	};
 	r.send();
-	// let genreRows = $("#genre-rows");
-	// let rowGenre = document.createElement("div");
-	// rowGenre.className = "row row-genre";
-	// genreRows.append(rowGenre);
+
+
+
 	
-	// let genreCol = document.createElement("div");
-	// genreCol.className = "columns small-4";
-	// rowGenre.append(genreCol);
-
-	// let genreBtn = document.createElement("button");
-	// genreBtn.className = "btn-genre";
-	// genreCol.append(genreBtn);
-	// genreBtn.innerHTML = "hhah";
-
 
 
 });
@@ -296,79 +311,36 @@ let testfunciton = function() {
 }
 
 
-// document.getElementById("btn-showmore").addEventListener("click", function() {
-// 	console.log("jfjfjfjfjf");
-// 	$("#genre-rows .row-genre").show();
-// });
-
 
 $(document).ready(function(){
+	$(".btn-filter-search").click(function() {
+		
+		var r = new XMLHttpRequest();
+		r.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
+		r.onreadystatechange = function () {
 
-	// class SearchResult {
-	// 	constructor(image, name, tags, text) {
-	// 		this.image = image;
-	// 		this.name = name;
-	// 		this.tags = tags;
-	// 		this.text = text;
-	// 	}
+			if (r.readyState != 4 || r.status != 200) return;
+			console.log(response);
 
-	// 	createCard() {
-	// 		let searchResultsDiv = document.getElementById("search-results-div");
+		
 
-	// 		let searchResultsCard = document.createElement("div");
-	// 		searchResultsCard.className = "row search-results-card";
-	// 		searchResultsDiv.appendChild(searchResultsCard);
+		};
+		r.send();
 
-
-	// 		let searchResultsImgDiv = document.createElement("div");
-	// 		searchResultsImgDiv.className = "columns small-2";
-	// 		searchResultsCard.appendChild(searchResultsImgDiv);
-
-	// 		// let searchResultsImg = document.createElement("img");
-	// 		// searchResultsImg.attr("src", this.image);
-
-	// 		// searchResultsImgDiv.appendChild(searchResultsImg);
+	});
 
 
-	// 		let searchResultsInfoDiv = document.createElement("div");
-	// 		searchResultsInfoDiv.className = "columns small-10 search-results-info";
-	// 		searchResultsCard.appendChild(searchResultsInfoDiv);
-
-	// 		searchResultsInfoDiv.innerHTML = '<h3>' + this.name + '</h3>' + '<p class="search-results-tags">' + this.tags + '</p> <p class="search-results-text">' + this.text + '</p>';
-
-	// 		// let searchResultsInfo = '<h1> + this.name + </h1>';
-	// 		// searchResultsInfoDiv.appendChild(searchResultsInfo);
-
-	// 	}
-	// }
-
-
-	// let newResultsCard = new SearchResult("mynd", "Paul Rudd", "Actor | Writer | Producer", "Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...");
-	// //console.log(newResultsCard);
-	// newResultsCard.createCard();
-	// // let searchResultsDiv = document.getElementById("search-results-div");
-	// // searchResultsDiv.appendChild(newResultsCard);
-
-
-
-	// // ÞETTA BÝR TIL RESULTSKORT VIRKAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// let searchResultsDiv = document.getElementById("search-results-div");
-	// let searchResultsCard = document.createElement("div");
-	// searchResultsCard.className = "row search-results-card";
-	// searchResultsDiv.appendChild(searchResultsCard);
-
-	// let searchResultsImgDiv = document.createElement("div");
-	// searchResultsImgDiv.className = "columns small-2";
-	// searchResultsCard.appendChild(searchResultsImgDiv);
-
-	// let searchResultsInfoDiv = document.createElement("div");
-	// searchResultsInfoDiv.className = "columns small-10 search-results-info";
-	// searchResultsCard.appendChild(searchResultsInfoDiv);
 
 
 });
 
 
+
+
+
+let filterSearch = function() {
+
+}
 
 
 
