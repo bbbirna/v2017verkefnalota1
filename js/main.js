@@ -144,7 +144,7 @@ theMovieDBInstance.getPopularMovies(function(results) {
     wrapper.innerHTML += movieTitle;
 
   }//close main for loop
- $('.slider').slick({
+ $('.sliderr').slick({
     centerMode: true,
     centerPadding: '60px',
     slidesToShow: 3,
@@ -451,7 +451,7 @@ theMovieDBInstance.getRecentMovies(function(results) {
       wrapper.innerHTML += movieTitle;
        
     }//close for loop
- $('.slider1').slick({
+ $('.sliderr1').slick({
     centerMode: true,
     centerPadding: '60px',
     slidesToShow: 3,
@@ -750,7 +750,7 @@ theMovieDBInstance.getComedyMovies(function(results) {
       let wrapper = document.getElementById('comedywrapper');
       wrapper.innerHTML += movieTitle;
     }
-     $('.slider2').slick({
+     $('.sliderr2').slick({
     centerMode: true,
     centerPadding: '60px',
     slidesToShow: 3,
