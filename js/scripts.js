@@ -49,10 +49,7 @@ class SearchResult {
     }
 }
 
-var hideFilters = function() {
-    console.log("lalalallalallalallalallalallaxxxxx")
-    $("#filter-search").hide();
-}
+
 
 // search by keywords
 let searchInput = "";
@@ -62,13 +59,13 @@ $(document).ready(function() {
         document.getElementById("search-results-div").innerHTML = "";
         searchInput = this.value;
         console.log(searchInput);
-        hideFilters();
-        // if (searchInput !== '') {
-        //     $("#filter-search").hide();
-        // }
-        // else {
-        //     console.log("empty input")
-        // }
+        
+        if (searchInput == '') {
+            $("#filter-search").show();
+        }
+
+        else {
+        $("#filter-search").hide();
         var r = new XMLHttpRequest();
         r.open("GET", "https://api.themoviedb.org/3/search/person?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
         r.onreadystatechange = function () {
@@ -76,14 +73,16 @@ $(document).ready(function() {
             let response = JSON.parse(r.responseText);
             console.log(response);
             for (let i = 0; i < response.results.length; i++) {
-                //console.log(response.results[i].name)
                 let imageURL = "http://image.tmdb.org/t/p/w185/" + response.results[i].profile_path;
                 if (response.results[i].profile_path == null) {
                     imageURL = "images/noImage.jpg"
                 }
-                
-                //console.log(imageURL);
-                let newResultsCard = new SearchResult(imageURL, response.results[i].name, "Actor | Writer | Producer", "Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...");
+                let knownFor = [];
+                for (let j = 0; j < response.results[i].known_for.length; j++) {
+                    knownFor.push(response.results[i].known_for[j].title);
+                }
+                console.log(knownFor);
+                let newResultsCard = new SearchResult(imageURL, response.results[i].name, "Known for: " + knownFor, "Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...");
             
                 newResultsCard.createCard();
     
@@ -91,6 +90,7 @@ $(document).ready(function() {
             };
         };
         r.send();
+        }
     });
     // $(".slider-handle").click(function() {
     //  console.log($(".aria-valuenow").value);
@@ -214,7 +214,7 @@ let filterSearchResults = [];
 let filterSearchId = [];
 filterMovieId = "";
 $(document).ready(function(){
-    console.log("lalalallalala")
+
     $("#btn-filter-search").click(function() {
         filterSearchTemp = [];
         filterSearchTemp2 = [];
