@@ -32,6 +32,9 @@ header h1 {
 	font-size: 70px;
 	color:#fff;
 }
+h1.rowtitles{
+	margin-top: 70px;
+}
 
 header h2 {
 	font-family: 'Oswald', sans-serif;
@@ -43,6 +46,7 @@ header h2 {
 .container.headings{
 	padding-top: 66px;
 	padding-bottom: 48px;
+	margin-left: 40px;
 	
 }
 
@@ -63,6 +67,26 @@ Button STYLING
 	width: 460px;
 	font-size: 40px;
 	color:#fff;
+}
+.button{
+	margin: 40px;
+}
+.slick-prev{
+	top:90%;
+	z-index: 1;
+	padding:30px;
+}
+.slick-next{
+	top:90%;
+	z-index: 1;
+	padding:70px;
+}
+.slick-prev:before, .slick-next:before {
+    font-family: 'slick';
+    font-size: 40px;
+    line-height: 1;
+    opacity: 1;
+    color: #ffae00;
 }
 
 
@@ -102,7 +126,15 @@ FRONT PAGE STYLING
 =====================
 
 */
-
+.popular, .recent-movies, .comedy{
+	max-width: none;
+	height: 13rem;
+}
+.slide-single{
+	width: 345px;
+	height: 406px;
+	padding-bottom: 30px;
+}
 .skew {
 	height: 400px;
 	width: 450px;
@@ -406,13 +438,28 @@ MEDIA QUERIES
 	}
 
 	header h1 {
-		font-size: 35px;
+		font-size: 45px;
 		font-weight: 300;
-		padding-bottom: 60px;
+		padding-bottom: 40px;
 	}
 
 	header h2 {
 		display: none;
+	}
+		header{
+		height: 300px
+	}
+	.headings h1{
+		font-size:2rem;
+		margin-left: 10px;
+	}
+
+	.fancy-button {
+  	
+	height: 45px;
+	width: 180px;
+	font-size: 18px;
+	margin-top: 80px;
 	}
 
 	.top-bar, .top-bar ul {
@@ -438,7 +485,8 @@ MEDIA QUERIES
 	.rating {
 	    width: 40px;
 	    height: 40px;
-	    top: 356px;
+	    top: 366px;
+	    right: 18px;
 	}
 
 	#out-of {
@@ -472,7 +520,7 @@ MEDIA QUERIES
 	   
 		background-position:50% 10%;
 	    position: relative;
-	    left:-130px;
+	    left:-100px;
 	    bottom: 277px;
 	    width: 280px;
 	    height:311px;

@@ -144,6 +144,32 @@ theMovieDBInstance.getPopularMovies(function(results) {
     wrapper.innerHTML += movieTitle;
 
   }//close main for loop
+ $('.slider').slick({
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+
 
 
 // RENDER ABOUT-MOVIE PAGE
@@ -337,6 +363,7 @@ theMovieDBInstance.getPopularMovies(function(results) {
           <div id="myId">
             
           </div>
+          </div>
         <footer>
           <div class="row align-center">
             <img class="footer-logo" src="images/Moviebox-logo.png">
@@ -370,7 +397,8 @@ theMovieDBInstance.getPopularMovies(function(results) {
       };//close AJAX function
       AJAX.send();
     });//close .image function
-}); // close popular movies function
+});
+ // close popular movies function
 
 
 
@@ -423,7 +451,31 @@ theMovieDBInstance.getRecentMovies(function(results) {
       wrapper.innerHTML += movieTitle;
        
     }//close for loop
-
+ $('.slider1').slick({
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
   // RENDER ABOUT-MOVIE PAGE
   $('.image').click(function() {
     let AJAX = new XMLHttpRequest();
@@ -649,6 +701,7 @@ theMovieDBInstance.getRecentMovies(function(results) {
       AJAX.send();
     });//close .image function
 });
+
 
 
 //RENDER COMEDY MOVIES
@@ -696,7 +749,34 @@ theMovieDBInstance.getComedyMovies(function(results) {
 
       let wrapper = document.getElementById('comedywrapper');
       wrapper.innerHTML += movieTitle;
-    }//close for loop
+    }
+     $('.slider2').slick({
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+
+//close for loop
   // RENDER ABOUT-MOVIE PAGE
   $('.image').click(function() {
     let AJAX = new XMLHttpRequest();
@@ -929,6 +1009,7 @@ theMovieDBInstance.getComedyMovies(function(results) {
 
 
 
+
 // Authenticate themoviedatabase with a key
 
 // var AJAX = new XMLHttpRequest();
@@ -959,7 +1040,6 @@ theMovieDBInstance.getComedyMovies(function(results) {
 //         console.log(response);
 //     }
 // });
-
 
 
 
