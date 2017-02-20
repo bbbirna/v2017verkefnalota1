@@ -48,6 +48,12 @@ class SearchResult {
         // searchResultsInfoDiv.appendChild(searchResultsInfo);
     }
 }
+
+var hideFilters = function() {
+    console.log("lalalallalallalallalallalallaxxxxx")
+    $("#filter-search").hide();
+}
+
 // search by keywords
 let searchInput = "";
 let filterSearchInfo = {};
@@ -55,7 +61,14 @@ $(document).ready(function() {
     $(".search-bar").keyup(function() {
         document.getElementById("search-results-div").innerHTML = "";
         searchInput = this.value;
-        console.log("vuhu");
+        console.log(searchInput);
+        hideFilters();
+        // if (searchInput !== '') {
+        //     $("#filter-search").hide();
+        // }
+        // else {
+        //     console.log("empty input")
+        // }
         var r = new XMLHttpRequest();
         r.open("GET", "https://api.themoviedb.org/3/search/person?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
         r.onreadystatechange = function () {
@@ -63,13 +76,13 @@ $(document).ready(function() {
             let response = JSON.parse(r.responseText);
             console.log(response);
             for (let i = 0; i < response.results.length; i++) {
-                console.log(response.results[i].name)
+                //console.log(response.results[i].name)
                 let imageURL = "http://image.tmdb.org/t/p/w185/" + response.results[i].profile_path;
                 if (response.results[i].profile_path == null) {
                     imageURL = "images/noImage.jpg"
                 }
                 
-                console.log(imageURL);
+                //console.log(imageURL);
                 let newResultsCard = new SearchResult(imageURL, response.results[i].name, "Actor | Writer | Producer", "Paul Stephen Rudd was born in Passaic, New Jersey. His parents, Michael and Gloria, both from Jewish families...");
             
                 newResultsCard.createCard();
@@ -196,58 +209,100 @@ $(document).ready( function() {
 });
 // filter search
 let filterSearchTemp = [];
+let filterSearchTemp2 = [];
 let filterSearchResults = [];
 let filterSearchId = [];
 filterMovieId = "";
 $(document).ready(function(){
+    console.log("lalalallalala")
     $("#btn-filter-search").click(function() {
         filterSearchTemp = [];
+        filterSearchTemp2 = [];
+        filterSearchId = [];
         
         var r = new XMLHttpRequest();
-        r.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
+        r.open("GET", "https://api.themoviedb.org/3/discover/movie?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
         r.onreadystatechange = function () {
             if (r.readyState != 4 || r.status != 200) return;
             let response = JSON.parse(r.responseText);
+            
             for (let i = 0; i < response.results.length; i++) {
                 if (filterSearchInfo.ratingLo < response.results[i].vote_average && response.results[i].vote_average < filterSearchInfo.ratingHi) {
                     filterSearchTemp.push(response.results[i]);
                 }
+        
+            }
+
+
+            for (let i = 0; i < filterSearchTemp.length; i++) {
+
                 if (filterSearchInfo.yearLo < filterSearchTemp[i].release_date.substr(0, 4) && filterSearchTemp[i].release_date.substr(0, 4) < filterSearchInfo.yearHi) {
                     //console.log(filterSearchTemp[i].release_date.substr(0, 4));
-                    filterSearchResults.push(filterSearchTemp[i]);
+                    filterSearchTemp2.push(filterSearchTemp[i]);
                     
-                
+                }
+
+            }
+
+
+            
+            // console.log(filterSearchInfo);
+            // console.log(filterSearchInfo.genres);
+            // console.log(filterSearchTemp);
+            // console.log(filterSearchTemp2);
+            for (let i = 0; i < filterSearchTemp2.length; i++) {
+               
+                for (let j = 0; j < filterSearchTemp2[i].genre_ids.length; j++) {
+                  
+                    for (let x = 0; x < filterSearchInfo.genres.length; x++) {
+                        if (filterSearchTemp2[i].genre_ids[j] === filterSearchInfo.genres[x]) {
+                            filterSearchResults.push(filterSearchTemp2[i]);
+
+                        }
+                    }
                 }
             }
-            for (var i = 0; i < filterSearchResults.length; i++) {
-                filterSearchId.push(filterSearchResults[i].id)
-            }
             
-            console.log(filterSearchInfo);
-            console.log(filterSearchInfo.genres);
             console.log(filterSearchResults);
-            console.log(filterSearchId);
             
+            //console.log(filterSearchId);
+            
+            // for (let i = 0; i < filterSearchId.length; i++) {
+            //     var r2 = new XMLHttpRequest();
+            //     r2.open("GET", "https://api.themoviedb.org/3/movie/" + filterSearchId[i] + "?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
+            //     r2.onreadystatechange = function () {
+            //         if (r2.readyState != 4 || r2.status != 200) return;
+            //         let response = JSON.parse(r2.responseText);
+            //         console.log(response.original_title)
+            //         for (let j = 0; j < response.genres.length; j++) {
+                        
+            //             console.log(response.genres[j].id)
+                        
+            //         }
+                    
+            //     };
+            // r2.send();
+            // }
             
         };
         r.send();
         
-        for (let i = 0; i < filterSearchId.length; i++) {
-            var r = new XMLHttpRequest();
-            r.open("GET", "https://api.themoviedb.org/3/movie/" + filterSearchId[i] + "?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
-            r.onreadystatechange = function () {
-                if (r.readyState != 4 || r.status != 200) return;
-                let response = JSON.parse(r.responseText);
-                console.log(response.original_title)
-                for (let j = 0; j < response.genres.length; j++) {
+        // for (let i = 0; i < filterSearchId.length; i++) {
+        //     var r = new XMLHttpRequest();
+        //     r.open("GET", "https://api.themoviedb.org/3/movie/" + filterSearchId[i] + "?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
+        //     r.onreadystatechange = function () {
+        //         if (r.readyState != 4 || r.status != 200) return;
+        //         let response = JSON.parse(r.responseText);
+        //         console.log(response.original_title)
+        //         for (let j = 0; j < response.genres.length; j++) {
                     
-                    console.log(response.genres[j].id)
+        //             console.log(response.genres[j].id)
                     
-                }
+        //         }
                 
-            };
-        r.send();
-        }
+        //     };
+        // r.send();
+        // }
     });
 });
 let filterSearch = function() {
