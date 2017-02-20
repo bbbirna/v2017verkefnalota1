@@ -378,7 +378,64 @@ svg {
 
 
 
-@media screen and (min-width: 500px) {
+@media screen and (max-width: 500px) {
+
+	h2 {
+		font-size: 18px;
+	}
+
+	.btn-genre {
+		width: 125px;
+		height: 35px;
+		font-size: 14px;
+	}
+
+	.slider-handle {
+		width: 30px;
+		height: 30px;
+	}
+
+	.slider-handle:before {
+		width: 41px;
+		height: 41px;
+		top: -6px;
+		left: -6px;
+	}
+
+	.slider-handle:after {
+		width: 5px;
+		height: 29px;
+		top: -12px;
+		left: 12px;
+	}
+
+	#btn-showmore {
+		display: none;
+	}
+
+	.slider-value span {
+		font-size: 14px;
+
+	}
+
+	.slider-num {
+		font-size: 16px;
+	}
+
+	#btn-filter-search {
+		width: 185px;
+		height: 45px;
+		font-size: 18px;
+	}
+
+	.search-icon {
+		width: 20px;
+		height: 20px;
+	}
+
+	.search-bar {
+		font-size: 16px;
+	}
 
 }
 
