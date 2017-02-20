@@ -1,6 +1,7 @@
 $(function() {
     $(document).foundation();   
 });
+
 // show and hide value on slider
 let showHandleValue = function(handleValue, slider, span) {
         if (handleValue !== $(slider).attr('data-initial-start') && handleValue !== $(slider).attr('data-initial-end')) {
@@ -44,8 +45,6 @@ class SearchResult {
         searchResultsInfoDiv.className = "columns small-10 search-results-info";
         searchResultsCard.appendChild(searchResultsInfoDiv);
         searchResultsInfoDiv.innerHTML = '<h3>' + this.name + '</h3>' + '<p class="search-results-tags">' + this.tags + '</p> <p class="search-results-text">' + this.text + '</p>';
-        // let searchResultsInfo = '<h1> + this.name + </h1>';
-        // searchResultsInfoDiv.appendChild(searchResultsInfo);
     }
 }
 
@@ -92,10 +91,7 @@ $(document).ready(function() {
         r.send();
         }
     });
-    // $(".slider-handle").click(function() {
-    //  console.log($(".aria-valuenow").value);
-    //  console.log(handle.attr('aria-valuenow'));
-    // });
+
     // get values on sliders
     $('.slider1').on('moved.zf.slider', function(){
       let handleValue1 = $("#slider-handle1").attr('aria-valuenow');
@@ -122,33 +118,32 @@ $(document).ready(function() {
       filterSearchInfo.yearLo = handleValue3;
       filterSearchInfo.yearHi = handleValue4;
     });
+
     // make sliders scalable
     $(window).on('resize', function() {
         $('.slider1, .slider2').foundation('_reflow');
     })
+
     // dots on sliders
     let svgDot = "<svg width='13px' height='13px' viewBox='0 0 13 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='dot' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Page-1' fill-rule='nonzero' fill='#e6e6e6'><circle id='Oval' cx='6.5' cy='6.5' r='6.5'></circle></g></g></svg>";
     let lineDots = "";
-    let test = function() {
+    let createDots = function() {
         for (let i = 0; i < $(".slider").width()/37; i++) {
             lineDots += svgDot;
         }
     }();
     $(".slider").append(lineDots);
 });
+
 // show more button
 $(document).ready( function() {
     $("#btn-showmore").click( function() {
         
         if ($("#btn-showmore").hasClass("showmore-closed")) {
-        
-            console.log("opna");
             $("#genre-rows .row-genre").show();
             $("#btn-showmore").html("Show less");
         };
         if ($("#btn-showmore").hasClass("showmore-open")) {
-            
-            console.log("loka");
             $("#genre-rows .row-genre").hide();
             $("#genre-rows .row-genre:nth-child(-n + 3)").show();
             $("#btn-showmore").html("Show more");
@@ -191,7 +186,6 @@ $(document).ready( function() {
                 if ($(this).hasClass("btn-genre-fill")) {
                     var btnIndex = selectedGenres.indexOf($(this).data("id"));
                     selectedGenres.splice(btnIndex, 1)
-                    
                 }
                 else {
                     selectedGenres.push($(this).data("id"));
@@ -200,8 +194,7 @@ $(document).ready( function() {
                 }
                 $(this).toggleClass("btn-genre-fill");
             
-        });
-                
+        });        
     
     };
     r.send();
@@ -265,62 +258,17 @@ $(document).ready(function(){
             
             console.log(filterSearchResults);
             
-            //console.log(filterSearchId);
-            
-            // for (let i = 0; i < filterSearchId.length; i++) {
-            //     var r2 = new XMLHttpRequest();
-            //     r2.open("GET", "https://api.themoviedb.org/3/movie/" + filterSearchId[i] + "?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
-            //     r2.onreadystatechange = function () {
-            //         if (r2.readyState != 4 || r2.status != 200) return;
-            //         let response = JSON.parse(r2.responseText);
-            //         console.log(response.original_title)
-            //         for (let j = 0; j < response.genres.length; j++) {
-                        
-            //             console.log(response.genres[j].id)
-                        
-            //         }
-                    
-            //     };
-            // r2.send();
-            // }
             
         };
         r.send();
         
-        // for (let i = 0; i < filterSearchId.length; i++) {
-        //     var r = new XMLHttpRequest();
-        //     r.open("GET", "https://api.themoviedb.org/3/movie/" + filterSearchId[i] + "?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
-        //     r.onreadystatechange = function () {
-        //         if (r.readyState != 4 || r.status != 200) return;
-        //         let response = JSON.parse(r.responseText);
-        //         console.log(response.original_title)
-        //         for (let j = 0; j < response.genres.length; j++) {
-                    
-        //             console.log(response.genres[j].id)
-                    
-        //         }
-                
-        //     };
-        // r.send();
-        // }
     });
 });
-let filterSearch = function() {
-}
-// {
-//  "adult":false,
-//  "backdrop_path":"/6xKCYgH16UuwEGAyroLU6p8HLIn.jpg",
-//  "belongs_to_collection":{
-//      "id":230,
-//      "name":"The Godfather Collection",
-//      "poster_path":"/7SJVjEDoo7xH62TS8stkqRk4Byo.jpg",
-//      "backdrop_path":"/3WZTxpgscsmoUk81TuECXdFOD0R.jpg"},
-//      "budget":6000000,
-//  "genres":[
-//      {"id":18,"name":"Drama"},
-//      {"id":80,"name":"Crime"}
-//  ],
-//  "homepage":"http://www.thegodfather.com/",
-//  "id":238,"imdb_id":"tt0068646",
-//  "original_language":"en",
-//  "original
+
+
+
+
+
+
+
+
