@@ -17,7 +17,11 @@ header {
 	padding: 10px 0px 120px 10px;
 	text-align:center;  
 	height: 490px;
+<<<<<<< HEAD
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 }
 
 body {
@@ -113,7 +117,19 @@ input {
     color: #ffae00;
 }
 
+<<<<<<< HEAD
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+
+/*
+
+=====================
+FOOTER STYLING
+=====================
+
+*/
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 .search-bar {
 	border: none;
@@ -239,7 +255,11 @@ FRONT PAGE STYLING
 =====================
 ABOUT MOVIE PAGE STYLING
 =====================
+<<<<<<< HEAD
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 .line-after:after {
 	content: '';
@@ -255,15 +275,28 @@ ABOUT MOVIE PAGE STYLING
 	display: none;
 }
 
+<<<<<<< HEAD
 .row-slider h2 {
 	margin-bottom: 52px;
 	margin-top: 84px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 .slider {
 	margin: 0 auto;
 =======
+<<<<<<< HEAD
+=======
+.wrapper {
+	margin-top: -161px;
+    width: 100%;
+    float: right;
+    margin-top: -669px;
+}
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 .wrapper h2 {
 	font-family: 'Roboto Condensed', sans-serif;
 	font-weight: 400;
@@ -276,7 +309,11 @@ ABOUT MOVIE PAGE STYLING
 	font-family: 'Oswald', sans-serif;
 	font-weight: 400;
 	font-size: 70px;
+<<<<<<< HEAD
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 }
 
 .slider-value {
@@ -314,7 +351,11 @@ ABOUT MOVIE PAGE STYLING
 	
 =======
 	font-size: 70px;
+<<<<<<< HEAD
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 }
 
 .slider-handle:hover {
@@ -354,16 +395,24 @@ ABOUT MOVIE PAGE STYLING
 .slider-handle:active:after {
 	/*background-color: #fa8e0e;*/
 	background-color: #FAA20E;
+<<<<<<< HEAD
 =======
 .storyline {
 	font-family: 'Oswald', sans-serif;
 	font-weight: 400;
 	font-size: 40px;
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 }
 
 h2 {
 	font-family: 'oswald', sans-serif;
+=======
+.storyline {
+	font-family: 'Oswald', sans-serif;
+	font-weight: 400;
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
 	font-size: 40px;
 	color: #4f4f4f;
 }
@@ -390,6 +439,9 @@ h2 {
 	background-color: rgba(0,0,0,0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 }
 
 .slider-fill {
@@ -402,6 +454,7 @@ h2 {
 	margin-bottom: 45px;
 }
 
+<<<<<<< HEAD
 .btn-genre {
 	border: 2px solid #E84B33;
 	width: 100%;
@@ -415,6 +468,13 @@ h2 {
 	-webkit-transition: all ease 0.4s;
 	-moz-transition: all ease 0.4s;
 	transition: all ease 0.4s;
+<<<<<<< HEAD
+=======
+}
+
+.btn-genre {
+	margin-bottom: 30px;
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 =======
 .more-info-wrapper {
 	clear:both;
@@ -429,8 +489,10 @@ h2 {
     height: 165px;
     position: relative;
     top: -100px;
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
 }
 
+<<<<<<< HEAD
 .rating {
 	color: #fff;
     background-color: #E7833B;
@@ -474,12 +536,15 @@ h2 {
 }
 
 <<<<<<< HEAD
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 .btn-genre:hover {
 
 	background-color: #E84B33;
 	color: white;
 }
 
+<<<<<<< HEAD
 .btn-genre-fill {
 	background-color: #E84B33;
 	color: white;
@@ -488,6 +553,7 @@ h2 {
 .row-showmore div {
 	text-align: right;
 =======
+<<<<<<< HEAD
 .movie-poster img{
     border-radius: 8px;
 }
@@ -507,6 +573,20 @@ h2 {
 	margin-top:70px;
 	margin-bottom:70px;
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+.rating p {
+	padding:0;
+	margin:0;
+}
+
+#rate-number {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 50px;
+	color:#fff;
+	padding:0;
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 }
 
 .btn-showmore {
@@ -518,6 +598,7 @@ h2 {
 	color: #3d6390;
 	font-family: 'roboto', sans-serif;
 	font-size: 20px;
+<<<<<<< HEAD
 	font-weight: 500;
 	display: inline-block;
 	-webkit-transition: all ease 0.4s;
@@ -525,10 +606,17 @@ h2 {
 	transition: all ease 0.4s;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 .btn-showmore:hover {
 	background-color: #3d6390;
 	color: white;
+=======
+	color:#fff;
+	padding:0;
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
 }
 
 .btn-search {
@@ -545,6 +633,7 @@ h2 {
 	margin-bottom: 250px;
 }
 
+<<<<<<< HEAD
 .btn-search:hover {
 	background-color: #faa71a;
 }
@@ -552,10 +641,25 @@ h2 {
 
 
 
+=======
+.movie-poster img{
+    border-radius: 8px;
+}
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+
+.movie-stills {
+	margin-bottom: 20px;
+}
 
 
+<<<<<<< HEAD
 
-
+=======
+.main-cast {
+	margin-top:70px;
+	margin-bottom:70px;
+}
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
 
 .search-results-card {
 	background-color: #fff;
@@ -564,6 +668,16 @@ h2 {
 	position: relative;
 	margin-bottom: 54px;
 }
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+/*
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
 
 .search-results-card:hover {
 	box-shadow: 0px 4px 4px rgba(0,0,0,0.25)
@@ -586,6 +700,7 @@ h2 {
 	margin-top: 38px;
 	margin-left: 34px;
 
+<<<<<<< HEAD
 }
 
 .search-img {
@@ -653,7 +768,64 @@ svg {
 
 
 
-@media screen and (min-width: 500px) {
+@media screen and (max-width: 500px) {
+
+	h2 {
+		font-size: 18px;
+	}
+
+	.btn-genre {
+		width: 125px;
+		height: 35px;
+		font-size: 14px;
+	}
+
+	.slider-handle {
+		width: 30px;
+		height: 30px;
+	}
+
+	.slider-handle:before {
+		width: 41px;
+		height: 41px;
+		top: -6px;
+		left: -6px;
+	}
+
+	.slider-handle:after {
+		width: 5px;
+		height: 29px;
+		top: -12px;
+		left: 12px;
+	}
+
+	#btn-showmore {
+		display: none;
+	}
+
+	.slider-value span {
+		font-size: 14px;
+
+	}
+
+	.slider-num {
+		font-size: 16px;
+	}
+
+	#btn-filter-search {
+		width: 185px;
+		height: 45px;
+		font-size: 18px;
+	}
+
+	.search-icon {
+		width: 20px;
+		height: 20px;
+	}
+
+	.search-bar {
+		font-size: 16px;
+	}
 
 }
 
@@ -675,6 +847,10 @@ svg {
 
 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 
 
@@ -687,23 +863,6 @@ svg {
 
 
 =======
-
-
-
-
-
-
-/*
-
-=====================
-MEDIA QUERIES
-=====================
-
-*/
-
-
-@media screen and (max-width: 640px){
-
 	header {
 	  padding: 0px 21px 20px 21px;;
 	  text-align:center;  
@@ -943,4 +1102,8 @@ MEDIA QUERIES
 	}
 }
 
+<<<<<<< HEAD
 >>>>>>> 4504b23b3bc9ba721c4e0d993311501d2c2ab0bd
+=======
+>>>>>>> fceb1bc53f3b7dbf6cd0f8b1044ce2381ff5e241
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844

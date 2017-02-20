@@ -4,6 +4,7 @@ $(function() {
 
 });
 
+// show and hide value on slider
 let showHandleValue = function(handleValue, slider, span) {
 		if (handleValue !== $(slider).attr('data-initial-start') && handleValue !== $(slider).attr('data-initial-end')) {
 			$(span).fadeIn();
@@ -23,6 +24,7 @@ let showHandleValue = function(handleValue, slider, span) {
 		}
 	}
 
+// display search results
 class SearchResult {
 	constructor(image, name, tags, text) {
 		this.image = image;
@@ -61,9 +63,14 @@ class SearchResult {
 	}
 }
 
+// search by keywords
 
 let searchInput = "";
+<<<<<<< HEAD
 let filterSearchArray = [];
+=======
+let filterSearchInfo = {};
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 $(document).ready(function() {
 	$(".search-bar").keyup(function() {
@@ -116,6 +123,7 @@ $(document).ready(function() {
 
 
 
+	// get values on sliders
 
 	$('.slider1').on('moved.zf.slider', function(){
 	  let handleValue1 = $("#slider-handle1").attr('aria-valuenow');
@@ -126,8 +134,13 @@ $(document).ready(function() {
 	  document.getElementById("sh-num2").innerHTML = handleValue2;
 	  showHandleValue(handleValue1, ".slider1", "#sh-num1");
 	  showHandleValue(handleValue2, ".slider1", "#sh-num2");
+<<<<<<< HEAD
 	  filterSearchArray[0] = handleValue1;
 	  filterSearchArray[1] = handleValue2;
+=======
+	  filterSearchInfo.ratingLo = handleValue1;
+	  filterSearchInfo.ratingHi = handleValue2;
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 	  
 	});
 
@@ -140,24 +153,23 @@ $(document).ready(function() {
 	  document.getElementById("sh-num4").innerHTML = handleValue4;
 	  showHandleValue(handleValue3, ".slider2", "#sh-num3");
 	  showHandleValue(handleValue4, ".slider2", "#sh-num4");
+<<<<<<< HEAD
 	  filterSearchArray[2] = handleValue3;
 	  filterSearchArray[3] = handleValue4;
+=======
+	  filterSearchInfo.yearLo = handleValue3;
+	  filterSearchInfo.yearHi = handleValue4;
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 	});
 
+	// make sliders scalable
 	$(window).on('resize', function() {
 		$('.slider1, .slider2').foundation('_reflow');
 	})
 
 
-	// $('.slider').on('moved.zf.slider', function(e, handle){
-	//   let handleValue = handle.attr('aria-valuenow');
-	//   console.log(handleValue);
-	//   $("#testSpan").innerHTML = handleValue;
-	//   document.getElementById("slider-handle-num3").innerHTML = handleValue;
-	// });
+	// dots on sliders
 
-
-	//punktar á slider
 	let svgDot = "<svg width='13px' height='13px' viewBox='0 0 13 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g id='dot' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Page-1' fill-rule='nonzero' fill='#e6e6e6'><circle id='Oval' cx='6.5' cy='6.5' r='6.5'></circle></g></g></svg>";
 	let lineDots = "";
 
@@ -167,35 +179,7 @@ $(document).ready(function() {
 		}
 	}();
 
-	
-	// $( window ).resize(function() {
-	//   for (let i = 0; i < $(".slider").width()/33; i++) {
-	// 		lineDots -= svgDot - svgDot;
-	// 	}
-	// });
-
 	$(".slider").append(lineDots);
-
-
-
-	// let genreRows = $("#genre-rows");
-	// let rowGenre = document.createElement("div");
-	// rowGenre.className = "row row-genre";
-	// genreRows.append(rowGenre);
-	
-	// let genreCol = document.createElement("div");
-	// genreCol.className = "columns small-4";
-	// rowGenre.append(genreCol);
-
-	// let genreBtn = document.createElement("button");
-	// genreBtn.className = "btn-genre";
-	// genreCol.append(genreBtn);
-	// genreBtn.innerHTML = "hhah";
-
-	// '<div class="columns small-4"><button class="btn-genre">Action</button></div><div class="columns small-4"><button class="btn-genre">Adventure</button></div><div class="columns small-4"><button class="btn-genre">Animation</button></div>'
-	// rowGenre.innerHTML = grenreBtn;
-
-
 
 });
 
@@ -204,8 +188,12 @@ $(document).ready(function() {
 
 
 
+// show more button
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 $(document).ready( function() {
 	$("#btn-showmore").click( function() {
 		
@@ -233,7 +221,12 @@ $(document).ready( function() {
 
 	
 
+<<<<<<< HEAD
 	//til að fá genres í search
+=======
+	// add genres to search
+
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 	var selectedGenres = [];
 	var r = new XMLHttpRequest();
 	r.open("GET", "https://api.themoviedb.org/3/genre/movie/list?api_key=7fd909842e93334fc23e423083861d34&language=en-US", true);
@@ -243,7 +236,7 @@ $(document).ready( function() {
 		let response = JSON.parse(r.responseText);
 		for (let i = 0; i < response.genres.length; i++) {
 			//console.log(response.genres[i].name);
-			console.log(response);
+			//console.log(response);
 			let genreRows = $("#genre-rows");
 
 			if (i % 3 == 0) {
@@ -261,7 +254,11 @@ $(document).ready( function() {
 			genreCol.append(genreBtn);
 			genreBtn.innerHTML = response.genres[i].name;
 			$(genreBtn).attr("data-id", response.genres[i].id);
+<<<<<<< HEAD
 			$(genreBtn).attr("onclick", testfunciton);
+=======
+			//$(genreBtn).attr("onclick", testfunciton);
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 
 			$("#genre-rows .row-genre").hide();
 			$("#genre-rows .row-genre:nth-child(-n + 3)").show();
@@ -292,34 +289,71 @@ $(document).ready( function() {
 			
 		});
 
-		
-		
+
+		// genres on click
+
+		$(".btn-genre").click( function() {
+
+				if ($(this).hasClass("btn-genre-fill")) {
+					var btnIndex = selectedGenres.indexOf($(this).data("id"));
+					selectedGenres.splice(btnIndex, 1)
+					
+				}
+
+				else {
+					selectedGenres.push($(this).data("id"));
+					filterSearchInfo.genres = selectedGenres;
+				}
+
+				$(this).toggleClass("btn-genre-fill");
+
+			
+		});
+				
 	
 	};
+<<<<<<< HEAD
+	r.send();
+=======
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
+
+
+
+	
+
+
 	r.send();
 
 
 
 	
 
-
-});
-
-
-let testfunciton = function() {
-	console.log(this.id);
-}
-
-
+<<<<<<< HEAD
 
 $(document).ready(function(){
 	$(".btn-filter-search").click(function() {
+=======
+
+});
+
+// filter search
+
+let filterSearchTemp = [];
+let filterSearchResults = [];
+let filterSearchId = [];
+filterMovieId = "";
+
+$(document).ready(function(){
+	$("#btn-filter-search").click(function() {
+		filterSearchTemp = [];
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
 		
 		var r = new XMLHttpRequest();
 		r.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
 		r.onreadystatechange = function () {
 
 			if (r.readyState != 4 || r.status != 200) return;
+<<<<<<< HEAD
 			console.log(response);
 
 		
@@ -328,13 +362,81 @@ $(document).ready(function(){
 		r.send();
 
 	});
+=======
+			let response = JSON.parse(r.responseText);
+
+			for (let i = 0; i < response.results.length; i++) {
+				if (filterSearchInfo.ratingLo < response.results[i].vote_average && response.results[i].vote_average < filterSearchInfo.ratingHi) {
+					filterSearchTemp.push(response.results[i]);
+
+				}
+
+				if (filterSearchInfo.yearLo < filterSearchTemp[i].release_date.substr(0, 4) && filterSearchTemp[i].release_date.substr(0, 4) < filterSearchInfo.yearHi) {
+					//console.log(filterSearchTemp[i].release_date.substr(0, 4));
+					filterSearchResults.push(filterSearchTemp[i]);
+					
+				
+				}
+
+			}
+
+			for (var i = 0; i < filterSearchResults.length; i++) {
+				filterSearchId.push(filterSearchResults[i].id)
+			}
+
+			filterSearchInfo.genres.push(filterSearchResults.id);
+			console.log(filterSearchInfo);
+			console.log(filterSearchInfo.genres);
+			console.log(filterSearchResults);
+			console.log(filterSearchId);
+			
 
 
+			
+
+		};
+		r.send();
 
 
+		
+		for (let i = 0; i < filterSearchId.length; i++) {
+			var r = new XMLHttpRequest();
+			r.open("GET", "https://api.themoviedb.org/3/movie/" + filterSearchId[i] + "?api_key=7fd909842e93334fc23e423083861d34&query=" + encodeURI(searchInput), true);
+			r.onreadystatechange = function () {
+
+				if (r.readyState != 4 || r.status != 200) return;
+				let response = JSON.parse(r.responseText);
+				console.log(response.original_title)
+				for (let j = 0; j < response.genres.length; j++) {
+					
+					console.log(response.genres[j].id)
+
+					
+
+				}
+				
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
+
+
+			};
+		r.send();
+		}
+
+
+<<<<<<< HEAD
 });
 
+=======
 
+	});
+>>>>>>> bc6ab054cbcd328b53baf1933ee786435a06b844
+
+
+
+
+let filterSearch = function() {
+
+}
 
 
 
@@ -368,7 +470,53 @@ let filterSearch = function() {
 
 
 
-
+// {
+// 	"adult":false,
+// 	"backdrop_path":"/6xKCYgH16UuwEGAyroLU6p8HLIn.jpg",
+// 	"belongs_to_collection":{
+// 		"id":230,
+// 		"name":"The Godfather Collection",
+// 		"poster_path":"/7SJVjEDoo7xH62TS8stkqRk4Byo.jpg",
+// 		"backdrop_path":"/3WZTxpgscsmoUk81TuECXdFOD0R.jpg"},
+// 		"budget":6000000,
+// 	"genres":[
+// 		{"id":18,"name":"Drama"},
+// 		{"id":80,"name":"Crime"}
+// 	],
+// 	"homepage":"http://www.thegodfather.com/",
+// 	"id":238,"imdb_id":"tt0068646",
+// 	"original_language":"en",
+// 	"original_title":"The Godfather",
+// 	"overview":"Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
+// 	"popularity":14.145773,
+// 	"poster_path":"/d4KNaTrltq6bpkFS01pYtyXa09m.jpg",
+// 	"production_companies":[
+// 	{"name":"Paramount Pictures",
+// 	"id":4},
+// 	{"name":"Alfran Productions",
+// 	"id":10211}
+// 	],
+// 	"production_countries":[
+// 	{"iso_3166_1":"US",
+// 	"name":"United States of America"}
+// 	],
+// 	"release_date":"1972-03-14",
+// 	"revenue":245066411,
+// 	"runtime":175,"spoken_languages":[
+// 	{"iso_639_1":"en",
+// 	"name":"English"},
+// 	{"iso_639_1":"it",
+// 	"name":"Italiano"},
+// 	{"iso_639_1":"la",
+// 	"name":"Latin"}
+// 	],
+// 	"status":"Released",
+// 	"tagline":"An offer you can't refuse.",
+// 	"title":"The Godfather",
+// 	"video":false,
+// 	"vote_average":8.3,
+// 	"vote_count":4322
+// }
 
 
 
