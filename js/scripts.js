@@ -186,7 +186,6 @@ $(document).ready( function() {
                     console.log($(this).data("id"));
                 }
                 $(this).toggleClass("btn-genre-fill");
-                filterSearchInfo.genres.push(selectedGenres);
             
         });
                 
